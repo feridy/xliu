@@ -1,0 +1,8 @@
+{
+    "editor.fontSize": 14,
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.tabSize": 4,
+    "jshint.packageManager": "npm",
+    "npm.autoDetect": "on",
+    "npm.enableScriptExplorer": true
+}
