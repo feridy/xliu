@@ -4,5 +4,8 @@
     "editor.tabSize": 4,
     "jshint.packageManager": "npm",
     "npm.autoDetect": "on",
-    "npm.enableScriptExplorer": true
+    "npm.enableScriptExplorer": true,
+    "javascript.format.insertSpaceAfterCommaDelimiter": true,
+    "javascript.format.insertSpaceAfterConstructor": true,
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true
 }
