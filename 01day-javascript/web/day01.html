@@ -59,11 +59,15 @@
 
      <script type="text/javascript">
          function playSound(e){
+             //have csslist data-key = e.keycode
+             //throw keycode listening
              const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
              const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
              if(!audio) return;
              key.classList.add('playing');
+             //audio reset
              audio.currentTime = 0;
+             //audio playing
              audio.play();
          }
          function removeClassList(e){
@@ -71,7 +75,9 @@
              e.target.classList.remove('playing');
          }
          const keys = document.querySelectorAll('.key');
+         //遍历没有个div child transition listening transition end time
          keys.forEach(key => key.addEventListener('transitionend',removeClassList));
+         //listening KEYBOCK BUTTON
          window.addEventListener('keydown',playSound);
 
      </script>
