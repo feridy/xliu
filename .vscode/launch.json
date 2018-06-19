@@ -5,6 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Experimental: Terminal (external)",
+            "type": "pythonExperimental",
+            "request": "launch",
+            "program": "${file}",
+            "console": "externalTerminal"
+        },
+        {
+            "name": "Django",
+            "type": "pythonExperimental",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver",
+                "--noreload",
+                "--nothreading"
+            ],
+            "django": true
+        },
+        {
+            "name": "Attach (Remote Debug)",
+            "type": "pythonExperimental",
+            "request": "attach",
+            "port": 3000,
+            "host": "localhost"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Electron Main",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "program": "${workspaceFolder}/main.js",
+            "protocol": "legacy"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Electron Main",
