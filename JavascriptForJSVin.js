@@ -9,10 +9,73 @@
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
     <style>
+        html{
+            background:aliceblue;
+            background-size:cover;
+            font-size:14px;
+            box-sizing:content-box;
+        }
+        body{
+            margin:0;
+            padding:0;
+            box-sizing:content-box;
+            min-width: 100vh;
+        }
+        *,*:after,*:before{
+            box-sizing:inherit;
+        }
+        .contain{
+            width:1000px;
+            margin:10px 8px;
+        }
+        .input_cont{
+            width:100%;
+            height:250px;
+            display:flex;
+            flex-direction:column;
+            justify-content: start;
+            align-items:center
+        }
+        .con_in{
+            width:80%;
+            display:flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex:.2 1 5px;
+            text-align: left;
+        }
+        .con_in label{
+            text-align: right;
+            display:inline-block;
+            width:25%;
+            font-size:16px;
+            font-weight: bold;
+            padding-right:10px;
+            margin-left:10px;
+
+        }
+        .con_in input{
+            height:30px;
+            font-size:20px;
+            font-weight:bold;
+        }
         .error {
             color: red;
             font-size: 12px;
+            margin-left:20px;
             display: none;
+        }
+        .button{
+            margin:60px;
+            background:cadetblue;
+            border-radius:10px;
+            border:none;
+            width:100px;
+            font-size:20px;
+            color:white;
+            font-weight: 500;
+            outline:auto;
+            cursor:pointer;
         }
     </style>
 </head>
@@ -22,24 +85,27 @@
         <form class="input_cont" method="POST">
             <div class="con_in">
                 <label class="lable_vin" for="first">First 8 digits of VIN:</label>
-                <input type="text" id="first" class="input_class" name="firstVin" placeholder="Please enter the first 8 digits of VIN">
+                <input type="text" id="first" class="input_class" name="firstVin" placeholder="Enter the first 8 digits">
                 <span class="error">请输入正确VIN的前8位</span>
             </div>
             <div class="con_in">
                 <label class="lable_vin" for="last">Last 8 digits of VIN:</label>
-                <input type="text" id="last" class="input_class" name="lastVin" placeholder="Please enter the last 8 digits of VIN">
+                <input type="text" id="last" class="input_class" name="lastVin" placeholder="Enter the last 8 digits">
                 <span class="error">请输入正确的VIN的后8位</span>
             </div>
             <div class="con_in">
                 <label class="lable_vin" for="count">Generate total for Vin:</label>
-                <input type="text" id="count" class="input_class generateCount" name="count" placeholder="Please enter how much vins are generated">
+                <input type="text" id="count" class="input_class generateCount" name="count" placeholder="Enter how much vins">
                 <span class="error">请输入数字</span>
             </div>
-            <input type="button" class="button" name="commit" value="Commit" onclick="showVin()">
-            <input type="reset" class="button" name="reset" value="Reset">
+            <div class="con_in">
+                <input type="button" class="button" name="commit" value="Commit" onclick="showVin()">
+                <input type="reset" class="button" name="reset" value="Reset">
+            </div>
         </form>
-        <div class="show_vin">
-        </div>
+        <ul class="show_vin">
+            
+        </ul>
     </div>
     <script type="text/javascript">
         const vin_to_num = {
@@ -130,7 +196,7 @@
             const lastOfVin_list = generateLastOfVin_list(lastVin.value, generateCount);
             const lastSum_list = lastSumList(generateCount);
             console.log(lastSum_list);
-            const vin = [];
+            const vins = [];
             for (let i = 0; i < lastSum_list.length; i++) {
                 let checkVin = (firstSum(firstVin.value) + lastSum_list[i]) % 11;
                 //console.log(checkVin);
@@ -138,9 +204,12 @@
                     checkVin = 'X';
                 }
                 console.log(checkVin);
-                vin.push(firstVin.value + checkVin + lastOfVin_list[i]);
+                vins.push(firstVin.value + checkVin + lastOfVin_list[i]);
             }
-            return vin;
+            const html = vins.map(function(vin,index){
+                return `<li><span>${index + 1}</span><span>${vin}</span></li>`;
+            }).join('');
+            return html;
         }
 
         function showVin() {
