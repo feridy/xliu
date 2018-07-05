@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <style>
+        .error {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contain">
+        <form class="input_cont" method="POST">
+            <div class="con_in">
+                <label class="lable_vin" for="first">First 8 digits of VIN:</label>
+                <input type="text" id="first" class="input_class" name="firstVin" placeholder="Please enter the first 8 digits of VIN">
+                <span class="error">请输入正确VIN的前8位</span>
+            </div>
+            <div class="con_in">
+                <label class="lable_vin" for="last">Last 8 digits of VIN:</label>
+                <input type="text" id="last" class="input_class" name="lastVin" placeholder="Please enter the last 8 digits of VIN">
+                <span class="error">请输入正确的VIN的后8位</span>
+            </div>
+            <div class="con_in">
+                <label class="lable_vin" for="count">Generate total for Vin:</label>
+                <input type="text" id="count" class="input_class generateCount" name="count" placeholder="Please enter how much vins are generated">
+                <span class="error">请输入数字</span>
+            </div>
+            <input type="button" class="button" name="commit" value="Commit" onclick="showVin()">
+            <input type="reset" class="button" name="reset" value="Reset">
+        </form>
+        <div class="show_vin">
+        </div>
+    </div>
+    <script type="text/javascript">
+        const vin_to_num = {
+            'A': 1,
+            'B': 2,
+            'C': 3,
+            'D': 4,
+            'E': 5,
+            'F': 6,
+            'G': 7,
+            'H': 8,
+            'J': 1,
+            'K': 2,
+            'L': 3,
+            'M': 4,
+            'N': 5,
+            'P': 7,
+            'R': 9,
+            'S': 2,
+            'T': 3,
+            'U': 4,
+            'V': 5,
+            'W': 6,
+            'X': 7,
+            'Y': 8,
+            'Z': 9,
+            '1': 1,
+            '2': 2,
+            '3': 3,
+            '4': 4,
+            '5': 5,
+            '6': 6,
+            '7': 7,
+            '8': 8,
+            '9': 9,
+            '0': 0
+        };
+        const vin_weigther = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
+        const firstVin = document.getElementById('first');
+        const lastVin = document.getElementById('last');
+        const count = document.getElementById('count');
+
+        function firstSum(first) {
+            let firstSum = 0;
+            for (var i = 0; i < first.length; i++) {
+                firstSum += vin_to_num[first[i]] * vin_weigther[i];
+            }
+            //console.log(firstSum);
+            return firstSum;
+        }
+
+        function lastSum(last) {
+            let lastSum = 0;
+            const index = vin_weigther.indexOf(9);
+            for (var i = 0; i < last.length; i++) {
+                lastSum += vin_to_num[last[i]] * vin_weigther[i + index];
+            }
+            //console.log(lastSum);
+            return lastSum;
+        }
+
+        function generateLastOfVin_list(last, generateCount) {
+            const vin_Twelve_Seventeen = last.slice(3, last.length);
+            const lastOfVin_list = [];
+            for (let i = 1; i <= generateCount; i++) {
+                const vin_Twelve_Seventeen_int = parseInt(vin_Twelve_Seventeen) + i;
+                if (String(vin_Twelve_Seventeen_int).length <= 5) {
+                    const last_five_vin = String(vin_Twelve_Seventeen_int).padStart(5, '0');
+                    lastOfVin_list.push(last.slice(0, 3) + last_five_vin);
+                }
+            }
+            if (generateCount > lastOfVin_list.length) {
+                alert('还有' + (generateCount - lastOfVin_list.length) + '没有生成！！！');
+            }
+            return lastOfVin_list;
+        }
+
+        function lastSumList(generateCount) {
+            const lastSum_list = [];
+            const lastOfVin_list = generateLastOfVin_list(lastVin.value, generateCount);
+            for (let i = 0; i < lastOfVin_list.length; i++) {
+                lastSum_list.push(lastSum(lastOfVin_list[i]));
+            }
+            return lastSum_list;
+        }
+
+        function generateVin(generateCount) {
+            const lastOfVin_list = generateLastOfVin_list(lastVin.value, generateCount);
+            const lastSum_list = lastSumList(generateCount);
+            console.log(lastSum_list);
+            const vin = [];
+            for (let i = 0; i < lastSum_list.length; i++) {
+                let checkVin = (firstSum(firstVin.value) + lastSum_list[i]) % 11;
+                //console.log(checkVin);
+                if (checkVin === 10) {
+                    checkVin = 'X';
+                }
+                console.log(checkVin);
+                vin.push(firstVin.value + checkVin + lastOfVin_list[i]);
+            }
+            return vin;
+        }
+
+        function showVin() {
+            const showVinList = document.querySelector('.show_vin');
+            const regex_first = /^(LF\w)((\w\d\w{3})|(\d{2}\w{3})|(\w{2}\d{3})|(\w{2}\d{1}\w{2}))$/gi;
+            const regex_last = /^\w\d(\w|\d)\d{5}$/gi;
+            let check = 0;
+            if (!firstVin.value || !firstVin.value.match(regex_first)) {
+                errors[0].style.display = 'inline';
+                firstVin.style.borderColor = 'red';
+                check++;
+            }
+            if (!lastVin.value || !lastVin.value.match(regex_last)) {
+                lastVin.style.borderColor = 'red';
+                errors[1].style.display = 'inline';
+                check++;
+            }
+            if (!count.value || !count.value.match(/\d+$/gi)) {
+                count.style.borderColor = 'red';
+                errors[2].style.display = 'inline';
+                check++;
+            }
+            if (check) {
+                return;
+            }
+            showVinList.innerHTML = generateVin(parseInt(count.value));
+            console.log(showVinList.innerHTML);
+        }
+
+        const errors = document.querySelectorAll('.error');
+        const inputs = document.querySelectorAll('.input_class');
+        /*
+        inputs.forEach(
+            function (input) {
+                input.addEventListener('focus', function () {
+                    console.log(this.id);
+                    if (this.id === 'first') {
+                        errors[0].style.display = 'none';
+                    }
+                    if (this.id === 'last') {
+                        errors[1].style.display = 'none';
+                    }
+                    if (this.id === 'count') {
+                        errors[2].style.display = 'none';
+                    }
+                    this.style.borderColor = '';
+                })
+            });
+            */
+            for(var i = 0;i <inputs.length;i++){
+                inputs[i].addEventListener('focus', function () {
+                    console.log(this.id);
+                    if (this.id === 'first') {
+                        errors[0].style.display = 'none';
+                    }
+                    if (this.id === 'last') {
+                        errors[1].style.display = 'none';
+                    }
+                    if (this.id === 'count') {
+                        errors[2].style.display = 'none';
+                    }
+                    this.style.borderColor = '';
+                });
+            }
+    </script>
+</body>
+
+</html>
