@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <script>
+    function reFontSize(){
+        const docElement = document.documentElement;
+        const docWidth = docElement.clientWidth > 750 ? 750 : docElement.clientWidth;
+        const docHtml = document.querySelector('html');
+        docHtml.style.fontSize = 20*(docWidth/375) + 'px';
+    }
+    reFontSize();
+    window.addEventListener('resize',reFontSize);
+    </script>
+    <title>天天生鲜-首页</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header-container">
+            <img src="../image/logo.png" alt="Loge">
+            <div class="search"></div>
+        </div>
+        <div class="center-container">
+
+        </div>
+        <div class="footer-container">
+
+        </div>
+    </div>
+</body>
+</html>

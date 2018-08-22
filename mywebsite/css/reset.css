@@ -1,0 +1,32 @@
+html,body,p,ul,h1,h2,h3,h4,h5,h6,input,form{
+    margin:0;
+    padding:0;
+}
+ul{
+    list-style:none;
+}
+li{
+    list-style:none;
+}
+a{
+    text-decoration:none;
+}
+img{
+    border:none;
+}
+h1,h2,h3,h4,h5,h6{
+    font-size:100%;
+}
+em{
+    font-style:normal;
+}
+.clearfix:before,clearfixd:after{
+    content:'';
+    display:table;
+}
+.clearfix:after{
+    clear:both;
+}
+.clearfix{
+    zoom:1;
+}

@@ -1,0 +1,121 @@
+html, body {
+    padding:0;
+    margin:0;
+}
+.clearfix:after,.clearfix:before{
+    content:"";
+    display:table;
+}
+.clearfix:after{
+    clear: both;
+}
+.clearfix{
+    zoom: 1;
+}
+.head-con{
+    width:956px;
+    height:133px;
+    margin:0px auto;
+}
+.head-con img{
+    margin-top:30px;
+}
+.login-con{
+    background: #518e17;
+}
+.login-center{
+    margin:0 auto;
+    background:url(../image/background_01.png) left 87px no-repeat;
+    width:956px;
+    height:482px;
+}
+.info{
+    float: left;
+    margin-left:482px;
+    margin-top:60px;
+    font-size:30px;
+    width:30px;
+    text-align: center;
+    line-height: 40px;
+    color:#ffffff;
+}
+.login-form{
+    float:right;
+    width:370px;
+    height:382px;
+    margin-top: 50px;
+    background-color:#ffffff;
+}
+.form-title{
+    width:100%;
+}
+.form-title .title-fl{
+    float:left;
+    margin-top:30px;
+    margin-left:64px;
+    font-size:24px;
+    color:#c0c0c0;
+}
+.form-title .title-re{
+    float:right;
+    text-indent: 36px;
+    margin-right:52px;
+    margin-top:38px;
+    text-decoration:none;
+    font-size:16px;
+    color:#518e17;
+    background:url(../image/icon.png) 0px 4px  no-repeat;
+}
+.form-con{
+    width:310px;
+    margin:20px auto 0;
+    border-top:1px solid #c0c0c0;
+}
+.form-con .nation{
+    width:310px;
+    height:26px;
+    font-size:12px;
+    color:#ff5400;
+    line-height: 26px;
+}
+.form-con .username,.password{
+    width:310px;
+    height:38px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    color:#a9a9a9;
+    border:1px solid #c0c0c0;
+    line-height: 38px;
+    text-indent: 16px;
+    padding:0px;
+}
+.list-con{
+    margin: 30px 0px;
+    width:310px;
+    font-size:12px;
+    color: #4b4b4b;
+}
+.list-con .remember{
+    float: left;
+    width:13px;
+    height: 13px;
+    background: #ffffff;
+    margin-right: 10px;
+}
+.list-con a{
+    float: right;
+    text-decoration: none;
+    color: #4b4b4b;
+}
+.commit{
+    width:310px;
+    height:40px;
+    font-size:24px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #47aa34;
+    border:none;
+    outline: none;
+    cursor: pointer;
+    line-height: 40px;
+}

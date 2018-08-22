@@ -7,5 +7,5 @@
     "npm.enableScriptExplorer": true,
     "javascript.format.insertSpaceAfterCommaDelimiter": true,
     "javascript.format.insertSpaceAfterConstructor": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
 }
