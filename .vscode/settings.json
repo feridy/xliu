@@ -8,4 +8,5 @@
     "javascript.format.insertSpaceAfterCommaDelimiter": true,
     "javascript.format.insertSpaceAfterConstructor": true,
     "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
+    "cssrem.rootFontSize": 40
 }
