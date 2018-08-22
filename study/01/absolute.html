@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>哈根达斯冰淇凌</title>
+    <style>
+    .container {
+        position: relative;
+        margin: 100px auto 0;
+        padding: 10px;
+        border: 1px solid #666666;
+        width: 310px;
+    }
+    .left_top_bar ,.right_bottom_bar {
+        position: absolute;
+        width: 60px;
+        height: 54px;
+        background-repeat: no-repeat;
+        background-position: top left;
+    }
+    .left_top_bar {
+        background-image: url(bl.gif);
+        transform: rotate(90deg);
+        top: 0;
+        left: 0;
+    }
+    .right_bottom_bar {
+        background-image: url(br.gif);
+        right: 0;
+        bottom: 0;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#">
+            <img src="adv.jpg" alt="哈根达斯">
+        </a>
+        <div class="left_top_bar"></div>
+        <div class="right_bottom_bar"></div>
+    </div>
+</body>
+</html>

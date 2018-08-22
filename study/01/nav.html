@@ -1,0 +1,73 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nav</title>
+    <style>
+        ul{
+            margin:0;
+            padding:0;
+        }
+        .main_nav{
+            margin: 10px auto;
+            font-size: 0;
+            text-align: center;
+            border: 1px solid black;
+        }
+        .main_nav li{
+            display:inline-block;
+            margin:5px;
+            width:100px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            background-color: yellow;
+        }
+        .main_nav li:hover{
+            background-color:steelblue;
+        }
+        .main_nav li a{
+            font-size: 20px;
+            font-family: 'Microsoft Yahei';
+            color:white;
+            text-decoration: none; 
+        }
+        .nav{
+            height: 50px;
+            border-top: 1px solid orange;
+            font-size: 0;
+        }
+        .nav>a{
+            padding: 0 10px;
+            font: 400 16px/50px 'Microsoft Yahei';
+            color: #3c3c3c;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+        .nav>a:hover{
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_nav">
+        <ul>
+            <li><a href="#">网站首页</a></li>
+            <li><a href="#">网站首页</a></li>
+            <li><a href="#">网站首页</a></li>
+            <li><a href="#">网站首页</a></li>
+            <li><a href="#">网站首页</a></li>
+        </ul>
+    </div>
+    <div class="nav">
+        <a href="#">设为首页</a>
+        <a href="#">手机客户端</a>
+        <a href="#">移动客户端</a>
+        <a href="#">首页</a>
+    </div>
+</body>
+</html>

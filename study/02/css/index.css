@@ -1,0 +1,37 @@
+body {
+    background-color: #fafafa;
+}
+.header {
+    height: 100px;
+    background-color: #ffffff;
+}
+.header .nav_container {
+    margin: 0 auto; /*居中布局*/
+    width: 1200px; /*版心的宽度*/
+    height: 100px;
+    overflow: hidden;
+    /* background-color: #d64c51; */
+}
+.logo {
+    float: left;
+    margin-top: 19px;
+    width: 220px;
+    height: 62px;
+}
+.nav {
+    float: right;
+    height: 100px;
+    text-align: center;   /*文字居中*/
+    line-height: 100px;   /*对行内块元素进行垂直居中*/
+}
+.nav ul li{
+    float: left;
+    padding-left: 40px;
+}
+.nav a{
+    font: 400 18px "Microsoft Yahei";
+    color: #333333;
+}
+.nav a:hover{
+    color: #2288f6;
+}

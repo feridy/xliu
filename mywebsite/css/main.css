@@ -1,0 +1,33 @@
+body{
+    font-family:'Microsoft Yahei';
+}
+.main-container{
+    position:absolute;
+    top: 0;
+    right:0;
+    bottom:0;
+    left:0;
+}
+.header-container{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:2.5rem;
+    background-color:#37ab40;
+    text-align: center;
+}
+.header-container img{
+    display:inline-block;
+    margin: .5rem auto;
+    height:1.75rem;
+}
+.header-container .search{
+    float:right;
+    right:.5rem;
+    width: 1.25rem;
+    height: 2rem;
+    margin: .5rem;
+    background:url(../image/icons.png) top left no-repeat;
+    background-size: 3rem 30rem;
+}

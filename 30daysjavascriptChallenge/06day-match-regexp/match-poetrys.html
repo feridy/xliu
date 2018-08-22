@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Match Poetrys</title>
+    <style type="text/css">
+        html{
+            font-size:20px;
+            background:aquamarine;
+            background-size:cover;
+            box-sizing:border-box;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+        ul{
+            margin:0;
+            padding:0;
+        }
+        li{
+            list-style: none;
+        }
+        .contain{
+            display:flex;
+            justify-content: center;
+            position:relative;
+        }
+        .search-form{
+            max-width: 700px;
+            display:flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+            position:relative;
+            top:10px;
+        }
+        input.search{
+            position:relative;
+            top:10px;
+            left:10px;
+            width:120%;
+            padding:20px;
+            text-align:center;
+            outline:0;
+            border:10px solid #f7f7f7;
+            box-shadow:0 0 5px rgba(0,0,0,0.12),inset 0 0 2px rgba(0,0,0,0.15);
+        }
+        .suggestion{
+            margin:20px;
+            width:100%;
+            position:relative;
+            text-align: center;
+            font-size:10px;
+        }
+        .suggestion li{
+            font-size:.1em;
+            margin:10px;
+            border:1px solid rgba(0,0,0,0.12);
+            padding:10px;
+            width:100%;
+            text-align: center;
+            background:white;
+            box-shadow: 0 5px 5px rgba(0,0,0,0.15);
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .suggestion li:nth-child(even){
+            transform:perspective(100px) rotateX(-3deg) translateY(10px) scale(1.2);
+        }
+        .suggestion li:nth-child(odd){
+            transform:perspective(100px) rotateX(3deg) translateY(10px) scale(1.2);
+        }
+    </style>
+</head>
+<body>
+   <div class="contain">
+       <form class="search-form">
+           <input type="text" name="search-name" class="search" placeholder="诗人名字，关键字">
+           <ul class="suggestion">
+               <li>输入词句，找一首诗</li>
+               <li>输入词句，找一首诗</li>
+           </ul>
+       </form>
+   </div>
+   <script>
+    const url = 'https://gist.githubusercontent.com/liyuechun/f00bb31fb8f46ee0a283a4d182f691b4/raw/3ea4b427917048cdc596b38b67b5ed664605b76d/TangPoetry.json';
+    const poetrys = [];
+    fetch(url).then(response => response.json()).then( 
+        poetry => {
+            return poetrys.push(...poetry);
+        });
+    function matchPoetry(wordText,poetrys){
+        const regex = new RegExp(wordText,'gi');
+        console.log(regex);
+        const searchPoetrys = poetrys.filter((poetry) =>{
+            const author = poetry.detail_author.join('');
+            return poetry.detail_text.match(regex) || poetry.title.match(regex) || author.match(regex);
+        });
+        console.log(searchPoetrys);
+        return searchPoetrys;
+    }
+    const suggestion = document.querySelector('.suggestion');
+    function displayResult(){
+        if(!this.value){
+            suggestion.innerHTML = '<li>.......</li>';
+           return;
+        }
+        const result = matchPoetry(this.value,poetrys);
+        const regex = new RegExp(this.value,'gi');
+        //console.log(result);
+        //console.log(regex);
+        const htmlText = result.map(poetry => {
+            const detail_text = poetry.detail_text.replace(regex,`<span class="h1">${this.value}</span>`);
+            const detail_title = poetry.title.replace(regex,`<span class="h1">${this.value}</span>`);
+            const detail_author = poetry.detail_author[0].replace(regex,`<span class="h1">${this.value}</span>`);
+            return `<li>
+                        <span>${detail_text}</span>
+                        <span>${detail_title}</span>
+                        <span>${detail_author}</span>
+                    </li>`;
+        }).join('');
+        //console.log(htmlText);
+        suggestion.innerHTML = htmlText;
+    }
+
+    const input = document.querySelector('.search');
+    input.addEventListener('keyup',displayResult);
+    //input.addEventListener('change',displayResult);
+   </script> 
+</body>
+</html>
