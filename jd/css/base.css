@@ -38,15 +38,44 @@ textarea{
     font-style: normal;
   }
 /* 版心样式，版心的宽度 */
-.m_container {
-    position: relative;
+.w {
     margin: 0 auto;
     width: 1190px;
 }
 /* 使用刚刚声明的字体的类样式 icommon 字体 */
-.icom_font {
+.iconfont {
     font-family: 'icomoon';
     font-size: 12px;
     font-weight: 400;
     font-style: normal;
+    text-align: center;
+    /* vertical-align: middle; */
+}
+
+/* 浮动 */
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+/* 公共的快捷导航栏模块 */
+.shortcut {
+    height: 30px;
+    font-size: 12px;
+    color: #9d9d9d;
+    line-height: 30px;
+    background-color: #e3e4e5;
+    border-bottom: 1px solid #dddddd;
+}
+.shortcut a {
+    font-size: 12px;
+    color: #9d9d9d;
+}
+.shortcut ul li {
+    float: left;
+}
+.shortcut .location {
+    font-size: 14px;
+    color: #f10215;
 }
