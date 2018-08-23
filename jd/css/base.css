@@ -1,0 +1,52 @@
+/* css reset */
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+}
+bady {
+    font-size: 12px;
+    font-family: "微软雅黑";
+}
+i {
+    font-style: normal;
+}
+a {
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+input {
+    outline: 0;
+    resize: none;
+    -webkit-appearance: none;
+}
+textarea{
+    resize: none;
+}
+
+/* common css  */
+/* statement font */
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?7kkyc2');
+    src:  url('../fonts/icomoon.eot?7kkyc2#iefix') format('embedded-opentype'),
+          url('../fonts/icomoon.ttf?7kkyc2') format('truetype'),
+          url('../fonts/icomoon.woff?7kkyc2') format('woff'),
+          url('../fonts/icomoon.svg?7kkyc2#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+/* 版心样式，版心的宽度 */
+.m_container {
+    position: relative;
+    margin: 0 auto;
+    width: 1190px;
+}
+/* 使用刚刚声明的字体的类样式 icommon 字体 */
+.icom_font {
+    font-family: 'icomoon';
+    font-size: 12px;
+    font-weight: 400;
+    font-style: normal;
+}
