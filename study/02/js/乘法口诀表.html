@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>乘法口诀表</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // use tow for calculate 1*9 
+        document.write('<table style=border-collapse:collapse; border=1 cellspacing=0 cellpadding=0 >')
+        for (var i = 1; i <= 9; i++) {
+            document.write('<tr>')
+            for (var j = 1; j <= i; j++) {
+                document.write('<td style=\'padding: 5px;\'>')
+                document.write(j + ' * ' + i + ' = ' + i * j);
+                document.write('</td>')
+            }
+            document.write('</tr>');
+        }
+        document.write('</table>');
+        document.write('<hr>')
+        // 求1-100之间所有数的乘积
+        // var sum = 0;
+        // for (var i = 1; i <= 100; i++) {
+        //     for (var j = 1; j <= i; j++) {
+        //         var accumulated = i * j;
+        //         var sum = sum + accumulated;
+        //         var a = j + ' * ' + i + ' = ' + accumulated;
+        //         console.log(sum);
+        //     }
+        // }
+        // 求1-100之间所有奇数的和
+        var sum = 0;
+        for (var i = 1; i <= 100; i++) {
+            if (i % 2) {
+                // console.log(i);
+                sum += i;
+                // console.log(sum);
+            }
+        }
+        // 本金10000元存入银行，年利率是千分之三，每过1年，将本金和利息相加作为新的本金。计算5年后，获得的本金是多少？
+        // 公式为：A * (1 + 0.3%)^n;
+        var capital = 10000;
+        var sum = 0;
+        for (var i = 1; i <= 5; i++) {
+            sum = capital + capital * 0.003;
+            capital = sum;
+        }
+        console.log('5年后获得的本金为：' + sum);
+        // 有个人想知道，一年之内一对兔子能繁殖多少对？于是就筑了一道围墙把一对兔子关在里面。已知一对兔子每个月可以生一对小兔子，而一对兔子从出生后第3个月起每月生一对小兔子。假如一年内没有发生死亡现象，那么，一对兔子一年内（12个月）能繁殖成多少对？（兔子的规律为数列，1，1，2，3，5，8，13，21)
+        var first_num = 1;
+        var second_num = 1;
+        for (var i = 3; i <= 12; i++) {
+            var sum = first_num + second_num;
+            console.log(sum);
+            first_num = second_num;
+            second_num = sum;
+        }
+        // 冒泡排序
+        var arr = [9, 4, 2, 14, 2, 6, 8];
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    var temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        // 去除数组中定于0的数据
+        var array = [10, 0, 9, 0, 2, 9, 0, 33, 4, 0, 22, 0];
+        var newArr = [];
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] != 0) {
+                newArr[newArr.length] = array[i]
+            }
+        }
+        console.log(newArr);
+        // 反转数字
+        var newArr2 = []
+        for (var i = array.length - 1; i >= 0; i--) {
+            newArr2[newArr2.length] = array[i];
+        }
+        // second method complete array inversion
+        for (var i = 0; i < array.length / 2; i++) {
+            var temp = array[array.length - 1 - i];
+            array[array.length - 1 - i] = array[i];
+            array[i] = temp;
+        }
+        // 根据用户输入班级的人数和每个人的成绩来计算总成绩和平均成绩
+        var perCount = parseInt(prompt('Please input person count:'));
+        var perScore = [];
+        var sum = 0;
+        for (var i = 0; i < perCount; i++) {
+            perScore[i] = Number(prompt('请输入每个' + (i + 1) + '人的成绩：'));
+            sum += perScore[i];
+            var average = sum / perCount;
+        }
+        var maxScore = perScore[0];
+        var minScore = perScore[0];
+        for (var i = 0; i < perScore.length; i++) {
+            if (maxScore < perScore[i]) {
+                maxScore = perScore[i];
+            }
+            if (minScore > perScore) {
+                minScore = perScore[i];
+            }
+        }
+        document.write('<div>全班一共' + perCount + '人</div>');
+        document.write("<div style='border:1px solid #000;width:400px;'>" + '班级总成绩为：' + '<span style=font-weight:700;>' +
+            sum + '</span>' + '</div>')
+        document.write("<div style='border:1px solid #000;width:400px;margin-top:-1px;'>" + '班级平均成绩为：' +
+            '<span style=font-weight:700;>' + average + '</span>' + '</div>')
+        document.write("<div style='border:1px solid #000;width:400px;margin-top:-1px;'>" + '班级中最好的成绩为：' +
+            '<span style=font-weight:700;>' + maxScore + '</span>' + '</div>')
+        document.write("<div style='border:1px solid #000;width:400px;margin-top:-1px;'>" + '班级中最差的成绩为：' +
+            '<span style=font-weight:700;>' + minScore + '</span>' + '</div>')
+    </script>
+</body>
+
+</html>
