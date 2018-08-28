@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bubble sort</title>
+</head>
+
+<body>
+    <script>
+        // 从小到大排序
+        var array = [90, 50, 40, 80, 50, 10, 20, 64, 85, 99, 55, 90, 50, 66, 44, 440, 10, 20, 64, 55, 66, 440, 550, 8,
+            4, 2, 3, 7, 9, 1
+        ];
+        for (var i = 0; i < array.length - 1; i++) {
+            for (var j = 0; j < array.length - 1 - i; j++) {
+                if (array[j] > array[j + 1]) {
+                    var temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp
+                }
+            }
+        }
+        // 出去10这个数字
+        var array_new = [];
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] !== 10) {
+                array_new[array_new.length] = array[i];
+            }
+        }
+
+        // 去除重复项 利用indexOf的方法
+        function unique1(array) {
+            var newArray = []
+            for (var i = 0; i < array.length; i++) {
+                if (i === array.indexOf(array[i])) {
+                    newArray[newArray.length] = array[i];
+                }
+            }
+            return newArray;
+        }
+
+        // 去重的第二种方法 两个数组比较的方式 新数组中的每一个值都和原来数组中的值没有重复
+        // @param array 是一个数组参数
+        // @function 为了去重数组的重复项功能
+        function unique(array) {
+            // 初始化新数组
+            var newArray = [array[0]];
+            // 这个循环为了让array数组中的每一个元素，与newArray数组中的每一个元素比较，判断是否有重复的
+            for (var i = 1; i < array.length; i++) {
+                var vertify = false;
+                // 判断数组中那个是重复的，重复的就不会在加入到新数组中
+                for (var j = 0; j < newArray.length; j++) {
+                    if (array[i] === newArray[j]) {
+                        vertify = true;
+                        break;
+                    }
+                }
+                if (!vertify) {
+                    newArray[newArray.length] = array[i]
+                }
+            }
+            return newArray;
+        }
+        // 第三种数组去重的方法，先排序然后再去重重复项
+        // @param array 为一个数组类型的参数
+        // @function unique2 这个函数利用排序后的函数进行数组去重
+        function unique2(array) {
+            // 冒泡排序
+            var newArray = [array[0]];
+            for (var i = 0; i < array.length - 1; i++) {
+                for (var j = 0; j < array.length - 1 - i; j++) {
+                    if (array[j] > array[j + 1]) {
+                        var temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    } // End if
+                } // end for
+            } // end for
+            // 数组中相邻的两个数比较，不相同添加到新数组中
+            for (var i = 0; i < array.length - 1; i++) {
+                if (array[i] !== array[i + 1]) {
+                    newArray[newArray.length] = array[i + 1];
+                } // End if
+            } // End for
+            return newArray;
+        } // End function
+        // 利用对象的方法进行检验数组中的重复项，如果对象的元素存在这证明这个数据重复
+        function unique3(array) {
+            var newArray = [];
+            var objectVertify = {};
+            for (var i = 0; i < array.length; i++) {
+                if (!objectVertify[array[i]]) {
+                    newArray.push(array[i]);
+                    objectVertify[array[i]] = true;
+                    console.log(objectVertify);
+                }
+            }
+            return newArray;
+        }
+        document.write("<div class='container'>" + array + "</div>")
+        // 判断一个数是不是质数，质数是从2开始，只能被1和自己整除
+        function isPrimeNumber(number) {
+            if (number === 1) {
+                return number + ' is not prime number';
+            }
+            if (number === 2) {
+                number + ' is a prime number';
+            }
+            for (var i = 2; i < number; i++) {
+                if (number % i === 0) {
+                    return number + ' is not prime number';
+                }
+            }
+            return number + ' is a prime number';
+        }
+        // 求一组数的最大数
+        function getMax(array) {
+            // 判断array参数是不是数组类型
+            if (array instanceof Array) {
+                var maxnumber = array[0];
+                for (var i = 1; i < array.length; i++) {
+                    if (maxnumber < array[i]) {
+                        maxnumber = array[i];
+                    }
+                }
+                return maxnumber;
+            }
+            var maxnumber = arguments[0];
+            for (var i = 1; i < arguments.length; i++) {
+                if (maxnumber < arguments[i]) {
+                    maxnumber = arguments[i];
+                }
+            }
+            return maxnumber;
+        }
+        // 利用三元表达式求两个数的最大值
+        function getMaxFromTow(num1, num2) {
+            return num1 > num2 ? num1 : num2;
+        }
+        // 数组的反转 reverse array
+        function reverseArray(array) {
+            var newArray = [];
+            newArray.length = array.length;
+            for (var i = 0; i < (array.length + 1) / 2; i++) {
+                newArray[i] = array[array.length - 1 - i];
+                newArray[newArray.length - 1 - i] = array[i];
+            }
+            return newArray;
+        }
+        // 生成斐波那契数列，依据不同的传入参数，生成不同长度的斐波那契数组
+        function generateFibonacci(number) {
+            var fibonacciArray = [];
+            if (number === 1) {
+                fibonacciArray[0] = 1;
+                return fibonacciArray;
+            }
+            if (number === 2) {
+                fibonacciArray[0] = 1;
+                fibonacciArray[1] = 1;
+                return fibonacciArray;
+            }
+            fibonacciArray[0] = 1;
+            fibonacciArray[1] = 1;
+            for (var i = 2; i < number; i++) {
+                fibonacciArray[i] = fibonacciArray[i - 2] + fibonacciArray[i - 1];
+            }
+            return fibonacciArray;
+        }
+        // 根据输入的年月日，来计算这个日子是这年的多少天
+        function calculateDays(year, month, day) {
+            if (month > 12 || day > 31){
+                return 'Please input correct month or day.\n The month can not more then 12;\n The day can not more then 31.'
+            }
+            // 这个数是这个日子是今年的多少的参数
+            var days = 0;
+            // 每个月的天数数组
+            var everyMothDays;
+            // 判断是不是闰年
+            if ((year % 4 === 0 && year % 100 !== 0) || year % 100 === 0) {
+                everyMothDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+            } else {
+                everyMothDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+            }
+            if (month === 1) {
+                days = day;
+                return 'This is the ' + days + 'th' + ' days of ' + year;
+            }
+            if (month === 2) {
+                days = everyMothDays[month - 1] + day;
+                return 'This is the ' + days + 'th' + ' days of ' + year;
+            }
+            // 累加这个月之前的天数
+            for (var i = 0; i < month - 1; i++) {
+                days += everyMothDays[i];
+            }
+            days = days + day;
+            return 'This is the ' + days + 'th' + ' days of ' + year;
+        }
+    </script>
+</body>
+
+</html>
