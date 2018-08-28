@@ -171,7 +171,7 @@
         }
         // 根据输入的年月日，来计算这个日子是这年的多少天
         function calculateDays(year, month, day) {
-            if (month > 12 || day > 31){
+            if (month > 12 || day > 31) {
                 return 'Please input correct month or day.\n The month can not more then 12;\n The day can not more then 31.'
             }
             // 这个数是这个日子是今年的多少的参数
@@ -199,6 +199,135 @@
             days = days + day;
             return 'This is the ' + days + 'th' + ' days of ' + year;
         }
+        // 预解析问题
+        // 预解析，就是浏览器JavaScript引擎会将变量声明和函数声明提升，预先解析
+        // 例子一：这个结果会输出undefined 而不是报错，这就是因为JavaScript引擎，将变量声明预先解析了，所以在调用这个变量的时候，这个变量声明已经存在但是，没有将赋值提前
+        console.log(a);
+        var a = 10;
+        // 例子二：函数声明提升 这个结果是函数f执行了，输出'Hello World'，没有报错
+        f();
+
+        function f() {
+            console.log('Hello World');
+        }
+        // 例子三：在函数内的变量声明提升问题
+
+        f1(); //这个输出 undefined ,说明在函数内部也就是说局部变量也存在也解析的过程，
+        // 在函数外面调用局部变量报错，说明预解析的函数提升只能提升到当前块内级的顶点，不会提升出块内级
+        // console.log(b);
+
+        function f1() {
+            console.log(b);
+            var b = 10;
+        }
+        // 跨越script标签看验证一下函数的预解析和变量的预解析
+        // f2(); //报错，证明不能夸越script标签
+        // console.log(c);//报错，证明不能夸越script标签
+
+        // 现在测试一下,函数声明预解析了的冲突问题,下面两个函数名都为f3的函数，在提前调用f3函数是，调用的那一个？ 最后的结果为aaa..这个说最后一个函数生效了，这表明重名函数还是存在冲突的问题。
+        f3(); // 输出的结果为’aaaaa'
+
+        function f3() {
+            console.log('wwwwww');
+        }
+        console.log(f3);
+        f3(); //输出结果为'aaaaaa'
+        function f3() {
+            console.log('aaaaaaa');
+        }
+        console.log(f3);
+        // 测试一下函数表达式的预解析问题，事实证明函数表达式的预解析，就是变量的预解析，只是解析了变量的声明，变量没有完成函数体的赋值，随意调用这个函数时报错。
+        console.log(f5); // undefined,变量声明预解析
+        // f5(); //报错，说这个函数没有定义，这个表明这个函数表达式没有预解析。
+        var f5 = function () {
+            console.log('vvvvvvv');
+        }
+        f5(); //成功输出信息
+        // 看一下函数表达式和函数声明的预解析冲突问题
+        console.log(f6); // 输出f6这个函数声明，而没有输出undefined。
+        f6(); // 这个肯定输出888888，因为，函数表达式的会报错
+        var f6 = function () {
+            console.log(6666666);
+        }
+        console.log(f6); // 输出f6这个变量赋值的匿名函数，把这个就想想成变量的声明就对了
+        f6(); // 输出6666666 f6函数表达式执行
+        function f6() {
+            console.log(888888);
+        }
+        console.log(f6); // 注意： 这个输出的结果为6666那个函数表达式
+        f6(); // 注意：这个结果为666666，也就是说6666那个函数表达式执行了，而8888那个函数声明没有执行
+
+
+        // 复杂的预解析
+        fun(); // 全部正确的输出了结果
+        // console.log(z); // 报错，因为没有变量的声明
+        console.log(b); // 正确的说出了10 因为是瘾式的全局变量
+        console.log(c); // 正确的说出了10 因为是瘾式的全局变量
+        function fun() {
+            var z = b = c = 10;
+            console.log(z);
+            console.log(b);
+            console.log(c);
+        }
+        // 高级的预解析问题
+        // 我们的预解释也不会受到function里面的return影响
+        function fn() {
+            alert("我们是全局的fn");
+        }
+        function fn2() {
+            alert(fn);
+            fn = 3;
+            return;
+            function fn() {
+                alert("我是fn2里面的");
+            }
+        }
+        fn2();// //function fn(){alert("我是fn2里面的");} 这就表明预解析不受函数的return影响
+        //预解析不会影响函数的存储内存和运行环境
+        // 当我们的一个函数返回一个新的function，我们在外面定义一个变量来接收，这样这个函数的内存就不能在执行完成后自动销毁，也就是我们所谓的函数内存被占用了。
+        var n = 0;
+        function na() {
+            var n = 10;
+            function nb() {
+                n++;
+                console.log(n);
+            }
+            nb();
+            return nb;
+        }
+        var nc = na(); // 输出11
+        console.log(nc); // 输出nb的函数声明
+        nc(); // 输出12 这是因为nb()这个函数是在na中的所以即使返回赋值给一个变量，但是运行的环境还是在原来的环境，也就是内存没有变
+        console.log(n); // 输出0；
+        // return直接返回的那个，其实是一个结果或者是值，是不需要预解释的。
+        var p = 200;
+        function und(){
+            var p = 0;
+            return p++;
+        }
+        var up = und();
+        console.log(up); //输出0，这就因为return直接返回的是一个结果或者为值，不会管他接下啦的计算的；
+
+        var param = 100;
+        function outer(){
+            var param = 0;
+            return function inner(){
+                return param++;
+            }
+        }
+        var test = outer(); //这个输出inner这个函数声明
+        var test1 = test(); //这个输出0 ，所以这个证明return就是放回了结果，不会等他计算完，不需要解析
+        var test2 = test(); //这个输出1，这是因为inner这函数运行了一遍就会累加，但是return的其实就是返回param在计算前的结果。
+        // 当我们的一个函数返回一个新的function，我们在外面定义一个变量来接收，这样这个函数的内存就不能在执行完成后自动销毁，也就是我们所谓的函数内存被占用了。
+    </script>
+
+
+
+    <script>
+        function f2() {
+            console.log('ni hao');
+        }
+        var c = 100;
     </script>
 </body>
 
