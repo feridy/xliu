@@ -1,13 +1,12 @@
-/* css reset */
-*, *::after, *::before {
+/* reset css */
+* ,*:after,*:before {
     margin: 0;
     padding: 0;
 }
-bady {
-    font-size: 12px;
-    font-family: "微软雅黑";
+h1, h2, h3, h4, h5, h6, strong {
+    font-weight: normal;
 }
-i {
+i, em {
     font-style: normal;
 }
 a {
@@ -18,64 +17,64 @@ li {
 }
 input {
     outline: 0;
+    border: 0;
+}
+textarea {
     resize: none;
+}
+button {
+    outline: 0;
+    border: 0;
     -webkit-appearance: none;
 }
-textarea{
-    resize: none;
+img {
+    vertical-align: middle;
+    border: none;
 }
-
-/* common css  */
-/* statement font */
+/* common css */
+/* All page background color */
+body {
+    font: 12px/1.6 'Microsoft Yahei';
+    background-color: #f6f6f6;
+}
+/* statement font family */
 @font-face {
     font-family: 'icomoon';
-    src:  url('../fonts/icomoon.eot?7kkyc2');
-    src:  url('../fonts/icomoon.eot?7kkyc2#iefix') format('embedded-opentype'),
-          url('../fonts/icomoon.ttf?7kkyc2') format('truetype'),
-          url('../fonts/icomoon.woff?7kkyc2') format('woff'),
-          url('../fonts/icomoon.svg?7kkyc2#icomoon') format('svg');
+    src:  url('../fonts/icomoon.eot?s1xyct');
+    src:  url('../fonts/icomoon.eot?s1xyct#iefix') format('embedded-opentype'),
+      url('../fonts/icomoon.ttf?s1xyct') format('truetype'),
+      url('../fonts/icomoon.woff?s1xyct') format('woff'),
+      url('../fonts/icomoon.svg?s1xyct#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
   }
-/* 版心样式，版心的宽度 */
+/* 页面版心 */
 .w {
     margin: 0 auto;
     width: 1190px;
 }
-/* 使用刚刚声明的字体的类样式 icommon 字体 */
+/* icomoon font family style */
 .iconfont {
-    font-family: 'icomoon';
-    font-size: 12px;
-    font-weight: 400;
-    font-style: normal;
-    text-align: center;
-    /* vertical-align: middle; */
-}
-
-/* 浮动 */
-.fl {
-    float: left;
-}
-.fr {
-    float: right;
-}
-/* 公共的快捷导航栏模块 */
-.shortcut {
-    height: 30px;
-    font-size: 12px;
-    color: #9d9d9d;
-    line-height: 30px;
-    background-color: #e3e4e5;
-    border-bottom: 1px solid #dddddd;
-}
-.shortcut a {
-    font-size: 12px;
-    color: #9d9d9d;
-}
-.shortcut ul li {
-    float: left;
-}
-.shortcut .location {
     font-size: 14px;
-    color: #f10215;
+    font-family: 'icomoon';
+    text-align: center;
+    font-style: normal;
+}
+/* 清除浮动的公共样式 */
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    zoom: 1;
+}
+/* 设置浮动的样式 */
+.left {
+    float: left;
+}
+.right {
+    float: right;
 }
