@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态创建列表</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <input type="button" value="创建表格" id="inputID">
+    <div class="wrap"></div>
+    <script>
+        var buttonObject = document.getElementById('inputID');
+        var divObject = document.querySelector('.wrap');
+        buttonObject.onclick = function () {
+            var nameList = [{
+                    name: '百度',
+                    link: 'https://wwww.baidu.com'
+                },
+                {
+                    name: '新浪',
+                    link: 'https://wwww.sina.com'
+                },
+                {
+                    name: '优酷',
+                    link: 'https://wwww.youku.com'
+                },
+                {
+                    name: '网易',
+                    link: 'https://www.163.com'
+                }
+            ];
+            if (!divObject.children.length) {
+                var createTable = document.createElement('table');
+                createTable.border = '1';
+                createTable.cellPadding = '0';
+                createTable.cellSpacing = '0';
+                createTable.style.borderCollapse = 'collapse';
+                divObject.appendChild(createTable);
+                divObject.style.margin = '40px';
+                for (var i = 0; i < nameList.length; i++) {
+                    var trObject = document.createElement('tr');
+                    createTable.appendChild(trObject);
+                    for (var key in nameList[i]) {
+                        var tdObject = document.createElement('td');
+                        if (key === 'link') {
+                            var aObject = document.createElement('a');
+                            aObject.href = nameList[i][key];
+                            aObject.innerHTML = nameList[i]['name']
+                            tdObject.appendChild(aObject);
+                            console.log(key);
+                        } else {
+                            tdObject.innerHTML = nameList[i]['name'];
+                        }
+                        tdObject.style.padding = '5px 50px';
+                        trObject.appendChild(tdObject);
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>
