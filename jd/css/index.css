@@ -1,25 +1,520 @@
-/* 首页顶部链接条 */
+/* This is css of index*/
+/* top advertising column start */
 .J_event {
-    height: 80px;
-    background-color: #0e2163;
+    background-color: #020000;
 }
-.advertising {
+.top_ad {
     position: relative;
-}
-.ad_picture {
-    margin: 0 auto;
-    display: block;
     height: 80px;
-    background: url(../images/header.jpg) no-repeat left top;
 }
-.ad_hidden {
+/* Close top advertising button  */
+.close_ad {
+    text-align: center;
     position: absolute;
-    right: -20px;
     top: 10px;
-    border: 1px solid #000;
+    right: -20px;
     width: 20px;
     height: 20px;
-    line-height: 20px;
     cursor: pointer;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(255,255,255,0.9);
+    z-index: 100;
 }
+.close_icon:before {
+    content:'\ea0f';
+}
+/* top advertising colum :end */
+/* shortcut navigation start */
+.shortcut {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #dddddd;
+    background-color: #e3e4e5;
+}
+.g_location {
+    position: relative;
+    float: left;
+    margin-left: 200px;
+}
+.nav {
+    float: right;
+}
+/* geographic location g_location style start */
+.g_location:hover {
+    background-color: #ffffff;
+}
+.g_location:hover .hidden_location {
+    display: block;
+}
+.show_location {
+    padding-left: 20px;
+    padding-right: 10px;
+    cursor: default;
+    color: #999999;
+}
+.icon_location:before {
+    content: "\e947";
+}
+.icon_location {
+    position: absolute;
+    top: 0px;
+    left: 2px;
+    font-size: 16px;
+    color: #f10219;
+}
+.hidden_location {
+    position: absolute;
+    display: none;
+    width: 300px;
+    height: 300px;
+    z-index: 100;
+    background-color: #ffffff;
+}
+/* geographic location g_location style end */
+/* shortcut navigation nav style */
+.nav li {
+    position: relative;
+    float: left;
+    font-size: 0;
+}
+.my_jd, .ct_server, .e_purchase, .wb_navigation {
+    display: inline-block;
+    padding-right: 20px;
+}
+.my_jd:hover,.ct_server:hover,.e_purchase:hover,.wb_navigation:hover {
+    /* padding-left: 10px; */
+    background-color: #ffffff;
+}
+.nav a {
+    font-size: 12px;
+    padding-left: 8px;
+    color: #999999;
+}
+.nav a:hover {
+    color: #c81623;
+}
+.nav .login {
+    padding-right: 8px;
+}
+.nav .register {
+    color: #f10219;
+}
+.nav .register:hover {
+    color: #f10219;
+}
+.spacer {
+    float: left;
+    width: 1px;
+    height: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #cccccc;
+}
+.icon_ctrl {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    font-size: 16px;
+    color: #cccccc;
+}
+.icon_ctrl:before {
+    content: "\ea50";
+}
+/* shorcut navigation nav style end */
+/* logo, search bar,shopping car,category navigation,etc header style start */
+.header {
+    position: relative;
+    height: 140px;
+    /* background-color: aquamarine; */
+}
+/* logo style start */
+.logo {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    overflow: hidden;
+    box-shadow: 0px -10px 10px rgba(0,0,0,.3);
+}
+.logo_img {
+    display: block;
+    width: 190px;
+    height: 170px;
+    text-indent: -2em;
+    background: #ffffff url(../images/logo.png) no-repeat;
+}
+/* logo style end */
+/* header search style start */
+.header_search {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    height: 35px;
+}
+.in_search {
+    float: left;
+    padding-left: 5px;
+    border: 1px solid #f10219;
+    width: 493px;
+    height: 33px;
+    color: #cccccc;
+}
+.search_commit {
+    float: left;
+    width: 50px;
+    height: 35px;
+    cursor: pointer;
+    background-color: #f10219;
+}
+.search_icon {
+    font-size: 16px;
+    line-height: 35px;
+    text-align: center;
+    color: #ffffff;
+}
+.search_icon::before {
+    content: '\e986';
+}
+/* search style end * 搜索框样式结束/
+/* hotwords style start 热搜字样式开始*/
+.hotwords {
+    position: absolute;
+    top: 60px;
+    left: 320px;
+    /* background-color: #f10219; */
+}
+.hotwords li {
+    float: left;
+    padding: 8px 5px 5px 0;
+}
+.hotwords a {
+    font-size: 12px;
+    color: #999999;
+}
+.hotwords a:hover {
+    color: #f10219;
+}
+.hotwords li:first-child a {
+    color: #f10219;
+}
+/* hotwords style end 热搜字样式结束 */
+/* 头部分类的导航类样式开始 header category navigative style start */
+.category_nav {
+    position: absolute;
+    left: 220px;
+    bottom: 0;
+}
+.navitem li {
+    float: left;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-bottom: 7px;
+}
+.navitem a {
+    font-size: 16px;
+    font-weight: 700;
+    color: #555555;
+}
+.navitem a:hover {
+    color: #f10219;
+}
+/* 头部分类的导航类样式结束 header category navigative style end */
+/* shopping car style start 购物车样式开始 */
+.shoppingcar {
+    position: absolute;
+    top: 25px;
+    right: 95px;
+    border: 1px solid #cccccc;
+    width: 188px;
+    height: 33px;
+    text-align: center;
+    line-height: 33px;
+    background-color: #ffffff;
+}
+.shoppingcar a {
+    font-size: 12px;
+    color: #f10219;
+}
+.caricon::before {
+    content: '\e93a';
+}
+.shoppingcar a .caricon {
+    font-size: 16px;
+}
+.shopping-pieces {
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    border-radius: 50%;
+    color: #ffffff;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    line-height: 15px;
+    background-color: #f10219;
+}
+/* shopping car style end 购物车样式结束 */
+/* super day advertising start 超级日广告开始 */
+.super-ad {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+}
+/* super day advertising end 超级日广告结束 */
+/* banner, detial category navigation, user information, bulletin board, expand server 轮播图，详细分类导航栏 用户信息 公告栏 拓展业务 start */
+.middle_container{
+    position: relative;
+}
+.grid {
+    height: 480px;
+    /* background-color: pink; */
+}
+/* detail navigation start */
+.detail_nav {
+    float: left;
+    width: 190px;
+    height: 480px;
+    background-color: #6e6568;
+}
+.detail_nav ul {
+    padding: 10px 0;
+}
+.detail_nav li {
+    padding-left: 12px;
+    height: 29px;
+    font-size: 0px;
+    /* color: #ffffff; */
+    line-height: 29px;
+    text-align: left;
+    overflow: hidden;
+}
+.detail_nav li:hover {
+    background-color: #9c9698;
+}
+.detail_nav li:hover a:hover {
+    color: #f10219;
+}
+.detail_nav li a {
+    margin: 0 3px;
+    font-size: 14px;
+    color: #ffffff;
+
+}
+.detail_nav li span {
+    font-size: 14px;
+    color: #ffffff;
+}
+/* detail navigation end */
+/* middle advertising start */
+.advertising_container{
+    float: left;
+    margin: 0 10px;
+}
+/* banner containter style */
+.banner_container {
+    position: relative;
+    width: 790px;
+    height: 340px;
+    overflow: hidden;
+}
+.banner_container li {
+    float: left;
+}
+.banner_container li img {
+    width: 790px;
+    height: 340px;
+    display: block;
+}
+.icon_left, .icon_right {
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    width: 30px;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 60px;
+    color: #e3e4e5;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.3);
+}
+.icon_left:hover,.icon_right:hover {
+    color: #f10219;
+}
+.icon_left{
+    left: 0;
+}
+.icon_left::before {
+    content: '\ea44';
+}
+.icon_right {
+    right: 0;
+}
+.icon_right::before {
+    content: '\ea42';
+}
+.banner_pointer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -90px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.3);
+}
+.banner_pointer li {
+    float: left;
+    margin: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.banner_pointer .clicked {
+    background-color: #f10219; 
+}
+/* advertising style */
+.advertising li {
+    margin-top: 10px;
+}
+.advertising img {
+    width: 390px;
+    height: 130px;
+}
+/* midddle advertising end */
+/* banner, detial category navigation, user information, bulletin board, expand server 轮播图，详细分类导航栏 用户信息 公告栏 拓展业务 */
+/* 放置其他内容的容器，包括users information,bulletin board,virtual server style start */
+.other_container {
+    float: right;
+    width: 190px;
+    height: 480px;
+    overflow: hidden;
+}
+/* user information style */
+.user_info {
+    position: relative;
+    padding: 15px;
+    border-bottom: 1px solid #cccccc;
+    height: 85px;
+    background-color: #ffffff;
+}
+.hi_jd {
+    height: 60px;
+    padding-left: 60px;
+    color: #666666; 
+}
+.hi_jd span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.hi_jd a {
+  display: inline-block;
+  margin-top: 5px;
+  width: 40px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 12px;
+  background-color: #f10219;
+}
+/* 头像的样式 */
+.avatar {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    /* padding: 10px; */
+    width: 50px;
+    height: 50px;
+    font-size: 0;
+    text-align: center;
+    line-height: 50px;
+    background: #555555 url(../images/sprite_userinfo@1x.png) no-repeat -70px 0px;
+}
+.avatar img {
+    width: 40px;
+    border-radius: 50%;
+}
+/* 会员样式 */
+.new_member, .plus_member {
+    margin-right: 3px;
+    width: 70px;
+    height: 20px;
+    border: 2px solid #f10219;
+    font-size: 12px;
+    color: #f10219;
+    text-align: center;
+    line-height: 20px;
+}
+.new_member:hover,.plus_member:hover {
+    background-color: #f10219;
+    color: #ffffff;
+}
+/* 公告栏样式 */
+.bul_board {
+    padding: 7px 13px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #cccccc;
+}
+.bul_board a {
+    padding: 1px 5px;
+    height: 17px;
+    line-height: 17px;
+    color: #999;
+}
+.bul_board a:hover {
+    color: #f10219;
+}
+.title_first {
+    margin-right: 10px;
+    border-bottom: 1px solid #f10219;
+}
+.title_second {
+    margin-left: 10px;
+}
+.bul_board .title_more {
+    padding: 1px 0;
+}
+.bul_board span {
+    margin-top: 2px;
+    width: 1px;
+    height: 12px;
+    background: #cccccc
+}
+.bul_content {
+    margin-top: -1px;
+    padding: 15px 0;
+    border-top: 1px solid #cccccc;
+}
+.hidden {
+    display: none;
+}
+.bul_content li {
+    margin: 3px 0;
+}
+.bul_content a:hover {
+    color: #f10219;
+}
+/* virtrual services stysle */
+.vir_service {
+    width: 192px;
+    text-align: center;
+    background-color: #ffffff;
+}
+.vir_service li {
+    float: left;
+    width: 47px;
+    height: 69px;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc; 
+}
+.vir_service a {
+    display: block;
+    padding-top: 45px;
+    background: url(../images/sprite_fs@1x.png) no-repeat 10px 20px;
+}
+/* 放置其他内容的容器，包括users information,bulletin board,virtual server style end */
