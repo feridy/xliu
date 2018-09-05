@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>美女时钟</title>
+    <style>
+        .wrap {
+            position: relative;
+            margin: 100px auto;
+            width: 800px;
+            text-align: center;
+        }
+        .clock {
+            position: absolute;
+            top: 0;
+            right: -90px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid blue;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1),
+            inset 0 0 0 3px black,
+            inset 0 0 10px white,
+            0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+        }
+        .hour, .minute,.second {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-top: -2px;
+            width: 45px;
+            height: 4px;
+            border-radius: 10px;
+            background-color: black;
+            transform-origin: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <img src="meimei/00_00.jpg" alt="当前时间为00:00" title="当前时间 00:00">
+        <div class="clock">
+            <div class="hour"></div>
+            <div class="minute"></div>
+            <div class="second"></div>
+        </div>
+    </div>
+    <script>
+        // 利用定时器和时间对象来实现这个时钟
+
+        // 因为定时器setInerval 需要两个参数一个是函数，一个是毫秒为单位的时间
+        // 定义一个函数，用来图片的根据时间的不同来进行切换
+        var imageObject = document.querySelector('.wrap img');
+        function replaceImage() {
+            // 首先要获取当前的时间
+            var nowTime = new Date();
+            var nowHour = nowTime.getHours();
+            var nowMinute = nowTime.getMinutes();
+            var nowSecond = nowTime.getSeconds();
+            nowHourString = nowHour < 2 ? '0'+ nowHour : nowHour;
+            nowMinuteString = nowMinute < 2 ? '0'+ nowMinute : nowMinute;
+            imageObject.src = 'meimei/' + nowHourString + '_' + nowMinuteString + '.jpg'
+            imageObject.alt = '当前时间为'+nowHourString+' : '+nowMinuteString;
+            imageObject.title = '当前时间为'+nowHourString+' : '+nowMinuteString;
+
+            var hourHandle = document.querySelector('.hour');
+            var minuteHandle = document.querySelector('.minute');
+            var secondHandle = document.querySelector('.second');
+            var secondDegree = nowSecond * 360 / 60 + 90;
+            var minuteDegree = ((nowMinute / 60) * 360) + ((nowSecond / 60) * 6) + 90;
+            var hourDegree = ((nowHour / 12) * 360) + ((nowMinute / 60) * 30) + 90;
+            secondHandle.style.transform = 'rotate(' + secondDegree + 'deg)';
+            minuteHandle.style.transform = 'rotate(' + minuteDegree + 'deg)';
+            hourHandle.style.transform = 'rotate(' + hourDegree + 'deg)';
+            // console.log(nowHour + ' : ' + nowMinute + ' : ' + nowTime.getSeconds())
+        }
+        replaceImage();
+        setInterval(replaceImage,1000);
+    </script>
+</body>
+
+</html>
