@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>移动元素的动画函数封装</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        input {
+            outline: 0;
+            border: none;
+            -webkit-appearance: none;
+        }
+        .button_con {
+            margin: 0 auto;
+            width: 500px;
+        }
+        .btn_style {
+            padding: 10px;
+            border: 1px solid #000000;
+            margin: 10px;
+        }
+        .box_con {
+            position: relative;
+            height: 400px;
+            line-height: 400px;
+        }
+        .box {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 200px;
+            height: 200px;
+            margin: 10px auto;
+            border: 1px solid #f10034;
+            background-color: #f10034;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button_con">
+        <input class="btn_style" type="button" value="移动400px">
+        <input class="btn_style" type="button" value="移动900px">
+    </div>
+    <div class="box_con">
+        <div class="box"></div>
+    </div>
+    <script>
+        var buttonList = document.querySelectorAll('.btn_style');
+        var box = document.querySelector('.box');
+        // console.log(buttonList[0].offsetLeft);
+        // 为按钮绑定点击事件
+        buttonList[0].onclick = function () {
+          var json = {'left':400,'top':80,'width':400,'height':400,'opacity': 0.4};
+          veriableSpeedAnimate1(box,json,function (){
+              json = {'left':40,'top':80,'width':40,'height':40};
+              veriableSpeedAnimate1(box,json);
+          });
+          console.log('wwww');
+        };
+        buttonList[1].onclick = function () {
+            // veriableSpeedAnimate(box, 900);
+            console.log('wwww');
+        }
+        // 封装盒子移动的动画函数
+        function moveAnimate(element, target) {
+            clearInterval(element.timeId);
+            element.timeId = setInterval(function () {
+                // 获取元素当前的位置，offSetLeft来获取距离左边的浏览器边框的位置这个返回Number类型
+                var curretPosition = element.offsetLeft;
+                // 每次移动的位置数，如果目的地的位置大于当前的位置就向右移动否则向左移动
+                var step = target > curretPosition ? 10 : -10;
+                curretPosition += step;
+                // 判断是否还要移动，如果当前的位置与目标位置相差不是一整个step的话就直接到目标位置，否则就一步一步的移动
+                if (Math.abs(target - curretPosition) > Math.abs(step)) {
+                    element.style.left = curretPosition + 'px';
+                } else {
+                    element.style.left = target + 'px';
+                    clearInterval(element.timeId);
+                }
+            }, 20);
+        }
+        // 变速动画的原理就是每次移动的距离是变化的
+        // 每次移动的距离为目标距离 - 当前位置的差，除于一个固定参数，如果为正值就向上取整，为负值就向下取整，最后的每次移动其实就是1
+        // function veriableSpeedAnimate(element, target) {
+        //     clearInterval(element.timeId);
+        //     element.timeId = setInterval(function () {
+        //         var current = element.offsetLeft;
+        //         var step = (target - current) > 0 ? Math.ceil((target - current) / 10) : Math.floor((target -
+        //             current) / 10);
+        //         current += step;
+        //         element.style.left = current + 'px';
+        //         if (current === target) {
+        //             clearInterval(element.timeId);
+        //         }
+        //     }, 20);
+        // }
+
+         // 变速动画的原理就是每次移动的距离是变化的
+        // 每次移动的距离为目标距离 - 当前位置的差，除于一个固定参数，如果为正值就向上取整，为负值就向下取整，最后的每次移动其实就是1
+        function veriableSpeedAnimate(element,attr, target) {
+            clearInterval(element.timeId);
+            element.timeId = setInterval(function () {
+                var current = parseInt(getStyleAttribute(element,attr));
+                var step = (target - current) / 10;
+                // console.log(current);
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                current += step;
+                element.style[attr] = current + 'px';
+                if (current === target){
+                    clearInterval(element.timeId);
+                }
+                console.log('current:'+current+' step: '+step+' target: '+target);
+            }, 20);
+        }
+        // 获取任意元素样式中任意属性的值
+        function getStyleAttribute (element,attr){
+            return window.getComputedStyle ? window.getComputedStyle(element,null)[attr] : element.currentStyle[attr];
+        }
+        // console.log(parseInt(getStyleAttribute(box,'width')));
+        function getStyleAttribute(element, attr) {
+            return window.getComputedStyle ? window.getComputedStyle(element, null)[attr] : element.currentStyle[attr];
+        }
+        // 实现多个元素属性的变化函数
+        function veriableSpeedAnimate1(element, json, fn) {
+            clearInterval(element.timeId);
+            element.timeId =setInterval(function () {
+                // var current = element.getStyleAttribute()
+                var flag = true;
+                for (key in json) {
+                    // var target = json[key]
+                    if (key === 'zIndex') {
+                        var target = json[key];
+                        element.style[key] = target;
+                    } else if (key === 'opacity') {
+                        var current = getStyleAttribute(element, key) * 100;
+                        // console.log(current);
+                        var target = json[key] * 100;
+                        var step = (target - current) / 10;
+                        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                        current += step;
+                        // console.log(current)
+                        var opacity = current / 100;
+                        element.style[key] = opacity;
+                        console.log('当前值：' + current + '移动的值：' + step + '目标的值：' + target);
+                    } else {
+                        var current = parseInt(getStyleAttribute(element, key));
+                        var target = json[key]
+                        var step = (target - current) / 10;
+                        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                        current += step;
+                        element.style[key] = current + 'px';
+                    }
+                    if (current !== target) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    clearInterval(element.timeId);
+                    if (fn) {
+                        fn();
+                    }
+                }
+                // 测试代码
+                console.log('当前值：' + current + '移动的值：' + step + '目标的值：' + target);
+            }, 20);
+        }
+    </script>
+</body>
+
+</html>

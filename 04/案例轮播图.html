@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      border: 0;
+    }
+
+    .all {
+      width: 500px;
+      height: 200px;
+      padding: 7px;
+      border: 1px solid #ccc;
+      margin: 100px auto;
+      position: relative;
+    }
+
+    .screen {
+      width: 500px;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen li {
+      width: 500px;
+      height: 200px;
+      overflow: hidden;
+      float: left;
+    }
+
+    .screen ul {
+      position: absolute;
+      left: 0;
+      top: 0px;
+      width: 3000px;
+    }
+
+    .all ol {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .all ol li {
+      float: left;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .all ol li.current {
+      background: #DB192A;
+    }
+
+    #arr {
+      display: none;
+    }
+
+    #arr span {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      margin-top: -20px;
+      background: #000;
+      cursor: pointer;
+      line-height: 40px;
+      text-align: center;
+      font-weight: bold;
+      font-family: '黑体';
+      font-size: 30px;
+      color: #fff;
+      opacity: 0.3;
+      border: 1px solid #fff;
+    }
+
+    #arr #right {
+      right: 5px;
+      left: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="all" id='box'>
+    <div class="screen">
+      <!--相框-->
+      <ul>
+        <li><img src="images/1.jpg" width="500" height="200" /></li>
+        <li><img src="images/2.jpg" width="500" height="200" /></li>
+        <li><img src="images/3.jpg" width="500" height="200" /></li>
+        <li><img src="images/4.jpg" width="500" height="200" /></li>
+        <li><img src="images/5.jpg" width="500" height="200" /></li>
+      </ul>
+      <ol>
+      </ol>
+    </div>
+    <div id="arr"><span id="left">&lt;</span><span id="right">&gt;</span></div>
+  </div>
+  <script>
+    // 最外边的div
+    var all = document.getElementById('box');
+    // 获取相框对象
+    var screen = all.children[0];
+    var moveWidth = screen.offsetWidth;
+    // 获取放置图片的ul元素
+    var ulElement = screen.children[0];
+    var flag  = 0;
+    // 获取ul中的所有li
+    var list = ulElement.children;
+    // 获取ol元素
+    var olObj = screen.children[1];
+    // 将ul中所有的li转换成数组
+    var liArray = Array.from(list);
+    // console.log(liArray);
+    // 根据图片的多少来创建ol中的li来显示页数
+    for (var i = 0; i < list.length; i++) {
+      var liObj = document.createElement('li');
+      liObj.innerHTML = i + 1;
+      olObj.appendChild(liObj);
+      // 为每个下标绑定鼠标进入事件
+      liObj.onmouseover = olListMouseoverHandle;
+    }
+    // ol鼠标进入事件的函数
+    var olListArray = Array.from(olObj.children);
+    olListArray[0].className = 'current';
+
+    function olListMouseoverHandle() {
+      for (var i = 0; i < olListArray.length; i++) {
+        olListArray[i].removeAttribute('class');
+      }
+      this.className = 'current';
+      flag = olListArray.indexOf(this);
+      moveAnimate(ulElement, -flag * moveWidth);
+      console.log(flag);
+    }
+    //all 鼠标进入事件
+    var arrObject = document.getElementById('arr');
+    all.onmouseover = function () {
+      arrObject.style.display = 'block';
+    }
+    // all 鼠标离开事件
+    all.onmouseout = function () {
+      arrObject.style.display = 'none';
+    }
+    // 左右焦点按钮事件
+    var leftObject = document.getElementById('left');
+    var rightObject = document.getElementById('right');
+    // var flag = ulElement.offsetLeft;
+    // console.log(flag);
+    // 要实现无缝衔接要在最后一张图片的后面在增加一张图片和第一个图片一样
+    ulElement.appendChild(ulElement.children[0].cloneNode(true));
+    // 左边焦点事件
+    leftObject.onclick = function () {
+      if (flag === 0){
+        ulElement.style.left = -moveWidth * (olListArray.length) + 'px';
+        flag = olListArray.length; 
+      }
+      flag--;
+      moveAnimate(ulElement,-flag * moveWidth);
+      console.log(flag);
+      if (flag >= 0){
+        for (var i = 0; i< olListArray.length;i++){
+          olListArray[i].removeAttribute('class');
+        }
+        olListArray[flag].className = 'current';
+      }
+    };
+    // 右边焦点事件
+    rightObject.onclick = function () {
+      if (flag === olListArray.length){
+        ulElement.style.left = '0px';
+        flag = 0;
+      }
+      flag ++;
+      moveAnimate(ulElement,-flag * moveWidth);
+      if (flag < olListArray.length){
+        for (var i = 0; i < olListArray.length; i++){
+          olListArray[i].removeAttribute('class');
+        }
+        olListArray[flag].className = 'current';
+      } else {
+        olListArray[flag -1].removeAttribute('class');
+        olListArray[0].className = 'current';
+      }
+    };
+    // 自动播放轮播图
+    setInterval(rightObject.onclick,2000);
+  </script>
+  <script>
+    // 封装移动动画函数
+    function moveAnimate(element, target) {
+      clearInterval(element.timeId);
+      element.timeId = setInterval(function () {
+        var current = element.offsetLeft;
+        var step = target > current ? 10 : -10;
+        current += step;
+        if (Math.abs(target - current) > Math.abs(step)) {
+          element.style.left = current + 'px';
+        } else {
+          clearInterval(element.timeId);
+          element.style.left = target + 'px';
+        }
+      }, 20);
+    }
+  </script>
+</body>
+
+</html>
