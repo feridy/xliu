@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>变速动画效果</title>
+</head>
+
+<body>
+    <script>
+        // 变速动画的原理就是每次移动的距离是变化的
+        // 每次移动的距离为目标距离 - 当前位置的差，除于一个固定参数，如果为正值就向上取整，为负值就向下取整，最后的每次移动其实就是1
+        function veriableSpeedAnimate(element, attr, target) {
+            clearInterval(element.timeId);
+            element.timeId = setInterval(function () {
+                var current = getStyleAttribute(element, attr);
+                var step = (target - current) > 0 ? Math.ceil((target - current) / 10) : Math.floor((target -
+                    current) / 10);
+                current += step;
+                element.style[attr] = current + 'px';
+                if (current === target) {
+                    clearInterval(element.timeId);
+                }
+            }, 20);
+        }
+        // 获取任意元素样式中任意属性的值
+        function getStyleAttribute(element, attr) {
+            return window.getComputedStyle ? window.getComputedStyle(element, null)[attr] : element.currentStyle[attr];
+        }
+        // 实现多个元素属性的变化函数
+        function veriableSpeedAnimate1(element, json, fn) {
+            clearInterval(element.timeId);
+            element.timeId =setInterval(function () {
+                // var current = element.getStyleAttribute()
+                var flag = true;
+                for (key in json) {
+                    if (key === 'zIndex') {
+                        element.style[key] = json[key];
+                    } else if (key === 'opacity') {
+                        var current =getStyleAttribute(element, key) * 100;
+                        var target = json[key] * 100;
+                        var step = (target - current) / 10;
+                        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                        current += step;
+                        element.style[key] = current / 100;
+                    } else {
+                        var current = parseInt(getStyleAttribute(element, key));
+                        var target = json[key]
+                        var step = (target - current) / 10;
+                        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                        current += step;
+                        element.style[key] = current + 'px';
+                    }
+                    if (current !== target) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    clearInterval(element.timeId);
+                    if (fn) {
+                        fn();
+                    }
+                }
+                // 测试代码
+                console.log('当前值：' + current + '移动的值：' + step + '目标的值：' + target);
+            }, 20);
+        }
+    </script>
+</body>
+
+</html>

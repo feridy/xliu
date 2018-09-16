@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>旋转木马轮播图</title>
+  <link rel="stylesheet" href="css/css.css" />
+  <script src="base.js"></script>
+  <script>
+    //
+    var config = [{
+        width: 400,
+        top: 20,
+        left: 50,
+        opacity: 0.2,
+        zIndex: 2
+      }, //0
+      {
+        width: 600,
+        top: 70,
+        left: 0,
+        opacity: 0.8,
+        zIndex: 3
+      }, //1
+      {
+        width: 800,
+        top: 100,
+        left: 200,
+        opacity: 1,
+        zIndex: 4
+      }, //2
+      {
+        width: 600,
+        top: 70,
+        left: 600,
+        opacity: 0.8,
+        zIndex: 3
+      }, //3
+      {
+        width: 400,
+        top: 20,
+        left: 750,
+        opacity: 0.2,
+        zIndex: 2
+      } //4
+
+    ];
+    window.onload = function () {
+      var slide = document.getElementById('slide');
+      var list = slide.getElementsByTagName('li');
+      var lock = true;
+      // 旋转的函数，初始是要将图片形成一个圈的效果
+      function assign() {
+        for (var i = 0; i < list.length; i++) {
+          veriableSpeedAnimate(list[i], config[i], function () {
+            lock = true;
+            // console.log(lock);
+          });
+        }
+      }
+      // 初始化
+      assign();
+
+      // 当鼠标进入时，显示左右的表箭头
+      var arrow = document.getElementById('arrow');
+      var arrLeft = document.getElementById('arrLeft');
+      var arrRight = document.getElementById('arrRight');
+
+      slide.onmouseover = function () {
+        veriableSpeedAnimate(arrow, {
+          opacity: 1
+        });
+      };
+      // 鼠标离开，隐藏左右箭头
+      slide.onmouseout = function () {
+        veriableSpeedAnimate(arrow, {
+          opacity: 0
+        });
+      };
+
+      // 左右箭头点击是旋转，实现旋转木的效果
+      // 防止点击过快，旋转动画的还没有结束又开始下一个动画
+      var lock = true;
+      arrLeft.onclick = function () {
+        if (lock) {
+          lock = false;
+          config.unshift(config.pop());
+          assign();
+        }
+      };
+
+      arrRight.onclick = function () {
+        if (lock) {
+          lock = false;
+          config.push(config.shift());
+          assign();
+        }
+      };
+    };
+  </script>
+
+</head>
+
+<body>
+  <div class="wrap" id="wrap">
+    <div class="slide" id="slide">
+      <ul>
+        <li><a href="#"><img src="images/slidepic1.jpg" alt="" /></a></li>
+        <li><a href="#"><img src="images/slidepic2.jpg" alt="" /></a></li>
+        <li><a href="#"><img src="images/slidepic3.jpg" alt="" /></a></li>
+        <li><a href="#"><img src="images/slidepic4.jpg" alt="" /></a></li>
+        <li><a href="#"><img src="images/slidepic5.jpg" alt="" /></a></li>
+      </ul>
+      <div class="arrow" id="arrow">
+        <a href="javascript:;" class="prev" id="arrLeft"></a>
+        <a href="javascript:;" class="next" id="arrRight"></a>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

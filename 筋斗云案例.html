@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #333333;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .nav {
+      position: relative;
+      margin: 50px auto;
+      width: 800px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 10px;
+      background: #ffffff url(images/rss.png) no-repeat right center;
+    }
+
+    #navBar li {
+      position: relative;
+      float: left;
+      width: 83px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    #cloud {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 83px;
+      height: 40px;
+      background: url(images/cloud.gif) no-repeat;
+    }
+
+    ul {
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <span id="cloud"></span>
+    <ul id="navBar">
+      <li>北京校区</li>
+      <li>上海校区</li>
+      <li>广州校区</li>
+      <li>深圳校区</li>
+      <li>武汉校区</li>
+      <li>关于我们</li>
+      <li>联系我们</li>
+      <li>招贤纳士</li>
+    </ul>
+  </div>
+  <script>
+    // 变速动画函数
+    function veriableSpeedAnimate(element, target) {
+      clearInterval(element.timeId);
+      element.timeId = setInterval(function () {
+        var current = element.offsetLeft;
+        var step = (target - current) > 0 ? Math.ceil((target - current) / 10) : Math.floor((target - current) / 10);
+        current += step;
+        element.style.left = current + 'px';
+        if (current === target){
+          clearInterval(element.timeId);
+        }
+        // 测试是否到达目的地
+      }, 20);
+    }
+    // 筋斗云效果
+    var navBar = document.getElementById('navBar');
+    var cloud = document.getElementById('cloud');
+    var record = 0;
+    // 有三个事件：1.鼠标进入事件；2.鼠标点击事件；3.鼠标离开事件
+    function hoverHandle(){
+      veriableSpeedAnimate(cloud,this.offsetLeft);
+      console.log(this.offsetLeft);
+    }
+    // 2.鼠标点击事件
+    function clickHandle (){
+      record = this.offsetLeft;
+    }
+    // 3.鼠标离开事件
+    function mouseoutHandle (){
+      veriableSpeedAnimate(cloud,record);
+    }
+    // 分别绑定事件，这个是针对li标签的事件
+    for(var i = 0; i < navBar.children.length; i++){
+      // 1.鼠标进入事件： 当鼠标进入到相应li标签是，.cloud移动到进入的位置
+      navBar.children[i].onmouseover = hoverHandle;
+      // 2.鼠标点击事件： 当鼠标点击相应的li标签时，记录点击的位置，为了实现鼠标离时回到这个记录的位置
+      navBar.children[i].onclick = clickHandle;
+      // 3.鼠标离开事件： 当鼠标离开相应的li标签时，.cloud回到记录的位置
+      navBar.children[i].onmouseout = mouseoutHandle;
+    }
+    
+  </script>
+</body>
+
+</html>

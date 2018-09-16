@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    ul {
+      list-style: none;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      width: 1200px;
+      height: 400px;
+      margin: 50px auto;
+      border: 1px solid red;
+      overflow: hidden;
+    }
+
+    div li {
+      width: 240px;
+      height: 400px;
+      float: left;
+    }
+
+    div ul {
+      width: 1300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box">
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <!-- <script src="common.js"></script> -->
+  <script>
+    var box = document.getElementById('box');
+    var ulObject = box.children[0];
+    var liObjectList = ulObject.children;
+    for (var i = 0; i < liObjectList.length; i++) {
+      liObjectList[i].style.backgroundImage = 'url(images/' + (i + 1) + '.jpg)';
+      liObjectList[i].onmouseover = function () {
+        for (var i = 0; i < liObjectList.length; i++) {
+          veriableSpeedAnimate(liObjectList[i],{'width': 100});
+        }
+          var json = {
+            width: 800
+          }
+          veriableSpeedAnimate(this,json);
+        // this.style.width = '800px';
+      };
+      liObjectList[i].onmouseout = function (){
+        for (var i = 0; i < liObjectList.length; i++) {
+          veriableSpeedAnimate(liObjectList[i],{'width':240});
+        }
+        // var json = {
+        //   'width': 240
+        // }
+        // veriableSpeedAnimate(this,json);
+      };
+    }
+  </script>
+  <script>
+    // 获取样式表属性函数
+    function getStyleAttribute(element, attribute) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(element, null)[attribute];
+      } else {
+        return element.currentStyle[attribute];
+      }
+    }
+    // 动画函数
+    function veriableSpeedAnimate(element, json, fn) {
+      clearInterval(element.timeId);
+      element.timeId = setInterval(function () {
+        var flag = true;
+        for (key in json) {
+          if (key === 'zIndex') {
+            element.style[key] = json[key];
+          } else if (key === 'opacity') {
+            var current = getStyleAttribute(element, key) * 100;
+            var target = json[key] * 100;
+            var step = (target - current) / 10;
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            current += step;
+            element.style[key] = current / 100;
+          } else {
+            var current = parseInt(getStyleAttribute(element, key));
+            var target = json[key];
+            var step = (target - current) / 10;
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            current += step;
+            element.style[key] = current + 'px';
+          }
+          if (current !== target) {
+            flag = false;
+          }
+        }
+        if (flag) {
+          clearInterval(element.timeId);
+          if (fn) {
+            fn();
+          }
+        }
+        console.log('当前值：'+current+'移动的距离：'+step+'目标值：'+target);
+      }, 20);
+      
+    }
+  </script>
+</body>
+
+</html>
