@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>高清放大镜的功能</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 350px;
+      height: 350px;
+      margin: 100px;
+      border: 1px solid #ccc;
+      position: relative;
+    }
+
+    .big {
+      width: 400px;
+      height: 400px;
+      position: absolute;
+      top: 0;
+      left: 360px;
+      border: 1px solid #ccc;
+      overflow: hidden;
+      display: none;
+    }
+
+    .mask {
+      width: 175px;
+      height: 175px;
+      background: rgba(255, 255, 0, 0.4);
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      cursor: move;
+      display: none;
+    }
+
+    .small {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+<div class="box" id="box">
+  <div class="small"><!--小层-->
+    <img src="images/small.png" width="350" alt=""/>
+    <div class="mask"></div><!--遮挡层-->
+  </div><!--小图-->
+  <div class="big"><!--大层-->
+    <img src="images/big.jpg" width="800" alt=""/><!--大图-->
+  </div><!--大图-->
+</div>
+<!-- 导入外部基础的处理函数 -->
+<script src="base.js"></script>
+<script>
+  // 1.鼠标进入到小图中时，显示遮挡层和放到的细节图片的容器
+  // 2.鼠标离开时，隐藏遮挡层和大图的细节容器
+  // 3.鼠标移动，遮挡层跟着移动，注意鼠标应该在遮挡层的中间
+  // 4.遮挡层的移动范围为整个小图的范围，不能超出范围
+  // 5.大图按照一定的比例进行显示
+  var smallImageContainer = document.getElementById('box').children[0];
+  var mask = smallImageContainer.children[1];
+  var bigImageContainer = document.getElementById('box').children[1];
+  var bigImage = bigImageContainer.children[0];
+
+  smallImageContainer.onmouseover = function (){
+    mask.style.display = 'block';
+    bigImageContainer.style.display = 'block';
+  };
+  smallImageContainer.onmousemove = function (e){
+    var proportion = (smallImageContainer.clientWidth - mask.offsetWidth) / (bigImage.offsetWidth - bigImageContainer.clientWidth);
+    // console.log(proportion);
+    var mouseX = eventObject.getPageX(e);
+    var mouseY = eventObject.getPageY(e);
+    var x = mouseX - parseFloat(getStyleAttribute(document.getElementById('box'),'marginLeft')) - mask.clientWidth / 2;
+    var y = mouseY - parseFloat(getStyleAttribute(document.getElementById('box'),'marginTop')) - mask.clientHeight / 2;
+    x = x < 0 ? 0 : x < smallImageContainer.clientWidth - mask.offsetWidth ? x : smallImageContainer.clientWidth - mask.offsetWidth;
+    y = y < 0 ? 0 : y < smallImageContainer.clientHeight - mask.offsetHeight ? y : smallImageContainer.clientHeight - mask.offsetHeight;    
+    mask.style.left = x +'px';
+    mask.style.top = y + 'px';
+    bigImage.style.marginLeft = -x / proportion + 'px';
+    bigImage.style.marginTop = -y / proportion + 'px';
+  };
+  smallImageContainer.onmouseout = function (){
+    mask.style.display = 'none';
+    bigImageContainer.style.display = 'none';
+  }
+</script>
+</body>
+</html>
