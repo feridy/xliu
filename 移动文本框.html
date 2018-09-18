@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽的对话框</title>
+    <style>
+        body,html,input,form,label {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+        input {
+            /* border: none; */
+            outline: 0;
+            -webkit-appearance: none;
+        }
+        .wrapper {
+            /* position: relative; */
+            margin: 0 auto;
+            width: 980px;
+            height: 100vh;
+        }
+        .click_button {
+            margin: 0 auto;
+            width: 200px;
+            text-align: center;
+        }
+        .click_button a {
+            font-size: 24px;
+            color: #000000;
+            font-family: 'Microsoft Yahei';
+        }
+        .login_container {
+            position: absolute;
+            left: 50%;
+            margin-left: -250px;
+            margin-top: 125px;
+            width: 500px;
+            height: 250px;
+            border: #ebebeb solid 1px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 20px #ddd;
+            text-align: center;
+            z-index: 100;
+            display: none;
+        }
+        .title {
+            width: 500px;
+            height: 60px;
+            text-align: center;
+            cursor: move;
+            font: normal 400 20px/60px 'Microsoft Yahei';
+        }
+        .userName_container,.password_container {
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            font-size: 14px;
+            /* padding-left: 5px; */
+        }
+        .login_container label {
+            width: 90px;
+            display: inline-block;
+        }
+        .username,.password {
+            padding-left: 5px;
+            border: 1px solid #ddd;
+            width: 300px;
+            height: 30px;
+        }
+        .btn {
+            background-color: #ebebeb;
+            border: #ddd 1px solid;
+            width: 400px;
+            height: 50px;
+            text-align: center;
+        }
+        .closed {
+            position: absolute;
+            right: -25px;
+            top: -25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ebebeb;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            /* z-index: 1000; */
+        }
+        .mast {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            display: none;
+            opacity: 0.2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="click_button">
+            <a href="javascript:void(0)" id="clickId">点击，弹出登录框</a>
+        </div>
+        <!-- 登录框 -->
+        <div class="login_container" id="loginId">
+            <form action="#" method="POST">
+                <div class="title">会员登录</div>
+                <div class="userName_container">
+                    <label for="userNameId">用户名：</label>
+                    <input type="text" name="username" class="username" id="userNameId" value="" placeholder="请输入用户名">
+                </div>
+                <div class="password_container">
+                    <label for="passwordId">登录密码：</label>
+                    <input type="password" name="password" class="password" id="passwordId" placeholder="请输入登录密码">
+                </div>
+                <input type="submit" value="会员登录" class="btn">
+                <span class="closed">关闭</span>
+            </form>
+        </div>
+        <!-- 遮挡层 -->
+        <div class="mast" id="mastId"></div>
+    </div>
+    <script>
+        var click_button = document.getElementById('clickId');
+        var login = document.getElementById('loginId');
+        var mast = document.getElementById('mastId');
+        var closeLogin = document.querySelector('.closed');
+        var userNameId = document.getElementById('userNameId');
+        userNameId.onfocus = function () {
+            this.placeholder = '';
+        };
+        userNameId.onblur = function () {
+            if (!this.value) {
+                this.placeholder = '请输入用户名';
+            }
+        };
+        click_button.onclick = function () {
+            mast.style.display = 'block';
+            login.style.display = 'block';
+        };
+        closeLogin.onclick = function () {
+            login.removeAttribute('style');
+            mast.style.display = 'none';
+        };
+        // 获取外部样式表的属性的封装函数-兼容IE8
+        function getStyleAtrribute(element, attr) {
+            return window.getComputedStyle ? window.getComputedStyle(element, null)[attr] : element.currentStyle[attr];
+        }
+        // console.log(getStyleAtrribute(login,'margin-left'));
+        // 封装的事件处理参数已经相关的移动距离函数的对象
+        // 1.事件处理参数和window.event兼容性代码-兼容IE8
+        // 2.clientX与clientY属性的兼容性
+        // 3.页面向上卷曲出去的距离scrollTop与向右卷曲出去的距离scrollLeft兼容性代码
+        // 4.页面pageX和pageY兼容性代码
+        // 5.将这些兼容性代码封装到一个对象中
+        var eventObject = {
+            getEventParam: function (e) {
+                return e || window.event;
+            },
+            getClient: function (e) {
+                return {
+                    clientX: this.getEventParam(e).clientX,
+                    clientY: this.getEventParam(e).clientY
+                };
+            },
+            getScroll: function () {
+                return {
+                    scrollLeft: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft ||
+                        0,
+                    scrollTop: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop ||
+                        0
+                };
+            },
+            getPage: function (e) {
+                return {
+                    // pageX: this.getEventParam(e).pageX ? this.getEventParam(e).pageX : this.getClient(e).clinetX + this.getScroll().scrollLeft,
+                    // pageY: this.getEventParam(e).pageY ? this.getEventParam(e).pageY : this.getClient(e).clinetY + this.getScroll().scrollTop
+                    pageX: this.getEventParam(e).pageX || this.getClient(e).clientX + this.getScroll(e).scrollLeft,
+                    pageY: this.getEventParam(e).pageY || this.getClient(e).clientY + this.getScroll(e).scrollTop
+                };
+            }
+        };
+        // 登录框随着鼠标移动-鼠标按下->鼠标移动->鼠标松开
+        // 鼠标移动放生在鼠标按下事件中
+        // 鼠标按下事件-为了记录当前鼠标的位置（x,y）
+        var titleObject = document.querySelector('.title');
+        titleObject.onmousedown = function (e) {
+            var left = login.offsetLeft;
+            var top = login.offsetTop;
+            var x1 = eventObject.getClient(e).clientX - left;
+            var y1 = eventObject.getClient(e).clientY - top;
+            // console.log('( x: '+ x1 +', y: ' + y1 + ')');
+            document.onmousemove = function (event) {
+                var moveX = eventObject.getPage(event).pageX < x1 ? x1 : (eventObject.getPage(event).pageX >
+                    window.innerWidth - (login.clientWidth + 25 - x1) ? window.innerWidth - (login.clientWidth + 25 -
+                        x1) : eventObject.getPage(event).pageX);
+                var moveY = eventObject.getPage(event).pageY;
+                var x = moveX - parseInt(getStyleAtrribute(login, 'marginLeft')) - x1;
+                var y = moveY - parseInt(getStyleAtrribute(login, 'marginTop')) - y1;
+                console.log(moveX, moveY);
+                login.style.left = x + 'px';
+                login.style.top = y + 'px';
+            };
+        };
+        titleObject.onmouseup = function () {
+            document.onmousemove = null;
+            console.log(000);
+        };
+    </script>
+</body>
+
+</html>
