@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>元素跟着鼠标飞</title>
+    <style>
+        body {
+            height: 1000px;
+        }
+        .box {
+            position: absolute;
+            /* left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0; */
+            /* margin: auto; */
+            width: 100px;
+            height: 100px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="flyId"></div>
+    <script>
+        // 1.事件处理参数和window.event兼容性代码-兼容IE8
+        // 2.clientX与clientY属性的兼容性
+        // 3.页面向上卷曲出去的距离scrollTop与向右卷曲出去的距离scrollLeft兼容性代码
+        // 4.页面pageX和pageY兼容性代码
+        // 5.将这些兼容性代码封装到一个对象中
+        var eventObject = {
+            getEventParam: function (e){
+                return e || window.event;
+            },
+            getClient: function (e){
+                return {clinetX: this.getEventParam(e).clientX,clinetY: this.getEventParam(e).clientY};
+            },
+            getScroll: function (){
+                return {
+                    scrollLeft: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                    scrollTop: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+                };
+            },
+            getPage: function (e){
+                return {
+                    pageX: this.getEventParam(e).pageX ? this.getEventParam(e).pageX : this.getClient(e).clinetX + this.getScroll().scrollLeft,
+                    pageY: this.getEventParam(e).pageY ? this.getEventParam(e).pageY : this.getClient(e).clinetY + this.getScroll().scrollTop
+                };
+            }
+        };
+        // 图片跟着鼠标飞的例子
+        var box = document.getElementById('flyId');
+        document.onmousemove = function (e){
+            // 将鼠标置于图片的中间位置，然后图片跟着鼠标移动
+            var x = box.offsetWidth / 2 ;
+            var y = box.offsetHeight / 2;
+            box.style.left = eventObject.getPage(e).pageX - x + 'px';
+            box.style.top = eventObject.getPage(e).pageY - y + 'px';
+        };
+    </script>
+</body>
+</html>
