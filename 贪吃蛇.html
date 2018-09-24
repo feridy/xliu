@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贪吃蛇游戏</title>
+    <style>
+        .start {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            right: 0;
+            margin: auto;
+            width: 200px;
+            height: 100px;
+            color: black;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+            background-color: rosybrown;
+            z-index: 1000;
+        }
+        .mash {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0,0, 0.4);
+            z-index: 100;
+        }
+        .end {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -100px;
+            width: 200px;
+            height: 100px;
+            /* background-color: aqua; */
+            display: none;
+            text-align: center;
+            /* line-height: 100px; */
+            font-size: 20px;
+            font-weight: 700;
+            color: red;
+            /* cursor: pointer; */
+            z-index:  200;
+        }
+        .end span {
+            padding: 10px;
+            margin-top: 5px;
+            background-color: antiquewhite;
+            border: 5px solid red;
+            display: block;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // 公用的函数方法-remove()；random()；
+        // remove删除子元素的方法
+        function remove(parentElement, removeElementId) {
+            var removeElement = document.getElementById(removeElementId);
+            if (removeElement) {
+                console.log(parentElement);
+                parentElement.removeChild(removeElement);
+            }
+        }
+
+        // random-产生随机数的方法
+        function random(min, max) {
+            var number = Math.floor(Math.random() * (max - min) + min);
+            return number;
+        }
+    </script>
+    <script>
+        // 游戏界面-Map构造函数
+        // position 为一个对象的形式 position = {x: 10，y: 20};
+        function Map(width, height, color, position) {
+            this.width = width;
+            this.height = height;
+            this.color = color;
+            this.position = position;
+        }
+
+        // 游戏界面初始化方法-init
+        // return mapElement-游戏界面的标签元素对象-div
+        Map.prototype.init = function () {
+            var mapElement = document.createElement('div');
+            mapElement.id = 'mapId';
+            mapElement.style.width = this.width + 'px';
+            mapElement.style.height = this.height + 'px';
+            mapElement.style.backgroundColor = this.color;
+            mapElement.style.left = this.position.x + 'px';
+            mapElement.style.top = this.position.y + 'px';
+            mapElement.style.position = 'absolute';
+            document.body.appendChild(mapElement);
+            return mapElement;
+        };
+
+        // 食物的对象-Food
+        function Food(width, height, color) {
+            this.width = width;
+            this.height = height;
+            this.color = color;
+            this.x = 0;
+            this.y = 0;
+        }
+
+        // 食物初始化方法-init
+        Food.prototype.init = function (mapElement) {
+            remove(mapElement, 'foodId');
+
+            var foodElement = document.createElement('div');
+            var x = random(0, mapElement.clientWidth / this.width) * this.width;
+            var y = random(0, mapElement.clientHeight / this.height) * this.height;
+            this.x = x;
+            this.y = y;
+            foodElement.id = 'foodId'
+            foodElement.style.position = 'absolute';
+            foodElement.style.width = this.width + 'px';
+            foodElement.style.height = this.height + 'px';
+            foodElement.style.left = this.x + 'px';
+            foodElement.style.top = this.y + 'px';
+            foodElement.style.backgroundColor = this.color;
+            mapElement.appendChild(foodElement);
+        };
+
+        // 贪吃蛇-Snake
+        function Snake(length, bodyWidth, bodyHeight, bodyColor, headColor, directory) {
+            this.length = length;
+            this.bodyWidth = bodyWidth;
+            this.bodyHeight = bodyHeight;
+            this.directory = directory;
+            this.bodyColor = bodyColor;
+            this.headColor = headColor;
+            this.bodyElements = [];
+        }
+
+        // 初始化方法-init
+        Snake.prototype.init = function (mapElement) {
+            remove(mapElement, 'snakeId');
+
+            var snakeElement = document.createElement('div');
+            snakeElement.id = 'snakeId';
+            if (this.bodyElements.length) {
+
+                this.bodyElements.unshift(this.bodyElements[0].cloneNode(true));
+                // document.cloneNode
+                for (var i = 0; i < this.bodyElements.length; i++) {
+                    // this.bodyElements[i].style.width = 10 +'px';
+                    snakeElement.appendChild(this.bodyElements[i]);
+                    console.log(i);
+                }
+                console.log(this.bodyElements);
+            } else{
+                for (var i = 0; i < this.length; i++) {
+                var bodyElement = document.createElement('div');
+                bodyElement.style.width = this.bodyWidth + 'px';
+                bodyElement.style.height = this.bodyHeight + 'px';
+                bodyElement.style.position = 'absolute';
+                bodyElement.style.backgroundColor = this.bodyColor;
+                bodyElement.style.left = this.bodyWidth * (i + 1) + 'px';
+                bodyElement.style.top = this.bodyHeight + 'px';
+                snakeElement.appendChild(bodyElement);
+                this.bodyElements.push(bodyElement);
+                // console.log(this.bodyElements);
+            }
+            this.bodyElements[this.length - 1].style.backgroundColor = this.headColor;
+            // console.log(this.headColor);
+            }
+            
+            mapElement.appendChild(snakeElement);
+        };
+
+        // 小蛇移动方法-move（）；
+        Snake.prototype.move = function (mapElement, food, directory) {
+
+            var childList = document.getElementById('snakeId').children;
+            switch (directory) {
+                case 'right':
+                    headMove(this.bodyWidth, 0);
+                    break;
+                case 'left':
+                    headMove(-this.bodyWidth, 0);
+                    break;
+                case 'up':
+                    headMove(0, -this.bodyHeight);
+                    break;
+                case 'down':
+                    headMove(0, this.bodyHeight);
+                    break;
+            }
+            function headMove(x, y) {
+                var headElement = childList[childList.length - 1];
+                var mash = document.querySelector('.mash');
+                if ((headElement.offsetLeft + x) > (mapElement.clientWidth - headElement.clientWidth) || (
+                        headElement.offsetLeft + x) < 0 || (headElement.offsetTop + y) < 0 || (headElement.offsetTop +
+                        y) > (mapElement.clientHeight - headElement.clientHeight)) {
+                    var endGame = document.getElementById('endId');
+                    endGame.style.display = 'block';
+                    var mash = document.getElementById('mashId');
+                    mash.style.display = 'block';
+                    // console.log(that);
+                    clearInterval(timeId);
+                    return;
+                }
+                for (var i = 0; i < childList.length - 1; i++) {
+                    // childList[i].setAttribute('index', i);
+                    childList[i].style.left = childList[i + 1].offsetLeft + 'px';
+                    childList[i].style.top = childList[i + 1].offsetTop + 'px';
+                    // console.log(childList[i].offsetLeft);
+                }
+
+                headElement.style.left = headElement.offsetLeft + x + 'px';
+                headElement.style.top = headElement.offsetTop + y + 'px';
+            }
+            // headMove(20,0);
+            // console.log(this.bodyElements[1].offsetLeft);
+            this.eat(food,mapElement);
+        };
+
+        // 小蛇吃食物的方法-eat（）；
+        Snake.prototype.eat = function (food,mapElement) {
+            var snakeElement = document.getElementById('snakeId');
+            var headElement = snakeElement.lastElementChild;
+            // var childListo = snakeElement.children;
+            var array = [...snakeElement.children];
+            // console.log(headElement);
+            if (headElement.offsetLeft === food.x && headElement.offsetTop === food.y) {
+                this.length++;
+                this.init(mapElement);
+                food.init(mapElement);
+                console.log(this.bodyElements[0].offsetLeft + 'wwwwww' + this.length);
+            }
+        };
+        
+        // Game-构造函数
+        function Game(snake,food){
+            this.snake = snake;
+            this.food = food;
+        }
+        
+        // Game-初始化显示每个对象
+        Game.prototype.init = function (mapElemet){
+            remove(mapElement,'startId');
+            remove(mapElement,'mashId');
+            var mash = document.createElement('div');
+            mash.id = 'mashId';
+            mash.className = 'mash';
+            var starButton = document.createElement('div');
+            starButton.id = 'startId';
+            var endGame = document.createElement('div');
+            endGame.id = 'endId';
+            endGame.className = 'end';
+            starButton.className = 'start';
+            starButton.innerHTML = '开始游戏';
+            endGame.innerHTML = '<span>游戏结束</span><span>请重新开始</span>';
+            mapElement.appendChild(starButton);
+            mapElement.appendChild(mash);
+            mapElement.appendChild(endGame);
+
+            this.food.init(mapElement);
+            this.snake.init(mapElement);
+            // this.startGame(mapElement,this.food,this.snake.directory);
+        };
+        
+        // 开始游戏的方法-startGame
+        Game.prototype.startGame = function (mapElement,food,snake){
+            window.timeId = setInterval(function (){
+                this.snake.move(mapElement,food,snake.directory);
+            }.bind(this),150);
+        };
+        document.onkeydown = function (e) {
+            switch (e.keyCode) {
+                case 39:
+                    snake.directory = 'right';
+                    console.log(e.keyCode);
+                    break;
+                case 37:
+                    snake.directory = 'left';
+                    console.log(e.keyCode);
+                    break;
+                case 38:
+                    snake.directory = 'up';
+                    console.log(e.keyCode);
+                    break;
+                case 40:
+                    snake.directory = 'down';
+                    console.log(e.keyCode);
+                    break;
+
+            }
+            console.log(snake);
+        };
+        
+        var map = new Map(800, 500, '#ccc', {
+            x: window.innerWidth / 2 - 800 / 2,
+            y: 100
+        });
+        var snake = new Snake(3, 20, 20, 'yellow', 'red', 'right');
+        var food = new Food(20, 20, 'red');
+        var game = new Game(snake,food);
+        var mapElement = map.init();
+        
+        game.init();
+
+        var start = document.getElementById('startId');
+        var mash = document.getElementById('mashId');
+        start.addEventListener('click',function (){
+            start.style.display = 'none';
+            mash.style.display = 'none';
+            game.startGame(mapElement,food,snake);
+        });
+        
+    </script>
+
+</body>
+
+</html>
