@@ -100,6 +100,10 @@
             table.appendChild(tbody);
         };
         addObject.onclick = function () {
+            if (!document.querySelector('.container table')){
+                console.log(222)
+                return ;
+            }
             var tr = document.createElement('tr');
             for (var key in datas[0]) {
                 var td = document.createElement('td');
