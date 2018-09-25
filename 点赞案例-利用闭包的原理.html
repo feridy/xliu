@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>点赞案例-利用闭包的原理</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        .img_con{
+            float: left;
+            padding: 10px;
+            text-align: center;
+        }
+        .img_con img {
+            width: 300px;
+            height: 200px;
+            display: block;
+        }
+        .praise {
+            margin-top: 10px;
+            width: 80px;
+            height: 40px;
+            /* line-height: 40px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul>
+            <li class="img_con">
+                <img src="images/bd.jpg" alt="meinv">
+                <input class="praise" type="button" value="赞(1)">
+            </li>
+            <li class="img_con">
+                <img src="images/brs.jpg" alt="meinv">
+                <input class="praise" type="button" value="赞(1)"></li>
+            <li class="img_con">
+                <img src="images/ly.jpg" alt="meinv">
+                <input class="praise" type="button" value="赞(1)"></li>
+            <li class="img_con">
+                <img src="images/lyml.jpg" alt="meinv">
+                <input class="praise" type="button" value="赞(1)"></li>
+        </ul>
+    </div>
+    <script>
+        var praiseList = document.querySelectorAll('.praise');
+        for (var i = 0; i < praiseList.length; i++) {
+            praiseList[i].onclick = praise();
+        }
+
+        function praise() {
+            var praiseCount = 2;
+            return function () {
+                this.value = '赞(' + praiseCount + ')';
+                praiseCount++;
+            }
+        }
+    </script>
+</body>
+
+</html>
