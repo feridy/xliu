@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>生成表格、添加数据、删除数据</title>
+</head>
+
+<body>
+    <div class="container">
+        <input class="createTable" type="button" value="生成表格">
+        <input class="add" type="button" value="添加">
+    </div>
+    <script>
+        var heads = ["姓名", "科目", "分数", "操作"];
+        var datas = [{
+                "name": "乔峰",
+                "subject": "语文1",
+                "score": 99.8
+            },
+            {
+                "name": "张三丰",
+                "subject": "语文2",
+                "score": 80.8
+            },
+            {
+                "name": "张无忌",
+                "subject": "语文3",
+                "score": 70.8
+            },
+            {
+                "name": "梅超风",
+                "subject": "语文4",
+                "score": 100
+            },
+            {
+                "name": "黄老邪",
+                "subject": "语文5",
+                "score": 60
+            },
+            {
+                "name": "凤姐",
+                "subject": "语文6",
+                "score": 70
+            },
+            {
+                "name": "芙蓉姐姐",
+                "subject": "语文7",
+                "score": 89.8
+            }
+        ];
+        var createObject = document.querySelector('.createTable');
+        var addObject = document.querySelector('.add');
+        var container = document.querySelector('.container');
+        createObject.onclick = function () {
+            if (document.getElementsByTagName('table')[0]) {
+                container.removeChild(document.getElementsByTagName('table')[0]);
+            }
+
+            var table = document.createElement('table');
+            table.border = 1;
+            table.style.width = '400px';
+            table.style.borderCollapse = 'collapse';
+            container.appendChild(table);
+            // 表格头部的结构
+            var thead = document.createElement('thead');
+            var headTr = document.createElement('tr');
+            headTr.style.backgroundColor = '#ccc';
+            headTr.style.height = '50px';
+            for (var i = 0; i < heads.length; i++) {
+                var th = document.createElement('th');
+                th.innerHTML = heads[i];
+                headTr.appendChild(th);
+            }
+            // 表格身体-tbody
+            var tbody = document.createElement('tbody');
+            tbody.style.textAlign = 'center';
+            for (var i = 0; i < datas.length; i++) {
+                var tr = document.createElement('tr');
+                for (var key in datas[i]) {
+                    var td = document.createElement('td');
+                    td.innerHTML = datas[i][key];
+                    tr.appendChild(td)
+                }
+                var lastTd = document.createElement('td');
+                lastTd.innerHTML = "<a href='javascript: void(0)'>删除</a>";
+                lastTd.children[0].onclick = function () {
+                    if (this.innerHTML) {
+                        console.log(this.parentElement.parentElement);
+                        tbody.removeChild(this.parentElement.parentElement);
+                    }
+                };
+                tr.appendChild(lastTd);
+                tbody.appendChild(tr);
+            }
+            thead.appendChild(headTr);
+            table.appendChild(thead);
+            table.appendChild(tbody);
+        };
+        addObject.onclick = function () {
+            var tr = document.createElement('tr');
+            for (var key in datas[0]) {
+                var td = document.createElement('td');
+                td.innerHTML = "<input type='text' style='width:50px;' >";
+                tr.appendChild(td);
+            }
+            var td = document.createElement('td');
+            td.innerHTML = "<a href='javascript:void(0)'>确定</a>   <a href='javascript:void(0)'>取消</a>"
+            tr.appendChild(td);
+            for (var i = 0; i < td.children.length; i++) {
+                td.children[i].onclick = function () {
+                    if (this.innerHTML === '确定') {
+                        tbody.removeChild(tr);
+                        var obj = {
+                            'name': '',
+                            'subject': '',
+                            'score': ''
+                        };
+                        var trChild = tr.children;
+                        // var newTr = document.createElement('tr');
+                        for (var i = 0; i < trChild.length - 1; i++) {
+                            for (var key in obj) {
+                                obj[key] = trChild[i].firstChild.value;
+                            }
+                        }
+                        datas.push(obj);
+                        createObject.onclick();
+                    } else if (this.innerHTML === '取消') {
+                        tbody.removeChild(this.parentElement.parentElement);
+                    }
+                };
+            }
+            var tbody = document.querySelector('table tbody');
+            tbody.appendChild(tr);
+        };
+    </script>
+</body>
+
+</html>
