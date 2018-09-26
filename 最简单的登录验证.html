@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>最简单的登录验证</title>
+    <style>
+        .container {
+            margin: 50px auto;
+            padding: 10px;
+            width: 400px;
+            border: 1px solid #cccccc;
+        }
+        label, input{
+            float: left;
+        }
+        .con {
+            margin: 10px 0;
+        }
+        .clearfix:before,.clearfix:after {
+            content: '';
+            display: table;
+        }
+        .clearfix:after {
+            clear: both;
+        }
+        .clearfix {
+            zoom: 1;
+        }
+        label {
+            width: 80px;
+            text-align: right;
+        }
+        .login ,.clance{
+            margin-left: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="http://baidu.com" method="post" id="loginId">
+            <div class="clearfix con">
+                <label for="username">用户名：</label>
+                <input type="text" id="username">
+            </div>
+            <div class="clearfix con">
+                <label for="password">密码：</label>
+                <input type="password" id="password">
+            </div>
+            <div class="clearfix con">
+                <input type="submit" value="登录" class="login">
+                <input type="reset" value="取消" class="clance">
+            </div>
+            
+        </form>
+    </div>
+
+    <script>
+        var login = document.querySelector('.login');
+        var container = document.querySelector('.container');
+        login.onclick = function (){
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var form = document.getElementById('loginId');
+            if (username === 'admin' && password === 'admin'){
+                if (document.getElementById('massage')){
+                    container.removeChild(document.getElementById('massage'));
+                }
+                form.style.display = 'none';
+                var promptMassage = document.createElement('div');
+                promptMassage.innerHTML = '登录成功';
+                container.appendChild(promptMassage);
+                return true;
+            } else {
+                if (document.getElementById('massage')){
+                    container.removeChild(document.getElementById('massage'));
+                }
+                var massage = document.createElement('p');
+                massage.id = 'massage';
+                massage.innerHTML = '用户名或密码错误';
+                container.appendChild(massage);
+                return false;
+            }
+            return false;
+        };
+    </script>
+</body>
+
+</html>
