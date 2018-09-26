@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>利用面向对象思想实现表格排序</title>
+</head>
+
+<body>
+    <script>
+        // 电影对象的一个数组
+        var movieArray = [
+            {
+                img: "bianxingjingang.jpg",
+                movieName: "变形金刚",
+                star: "希亚·拉伯夫",
+                direct: "迈克尔·贝",
+                type: "d动作",
+                time: "2007年07月03日"
+            },
+            {
+                img: "qiannvyouhun.jpg",
+                movieName: "倩女幽魂",
+                star: "张国荣",
+                direct: "程小东",
+                type: "j惊悚",
+                time: "1987年7月18日"
+            },
+            {
+                img: "gongfu.jpg",
+                movieName: "功夫",
+                star: "周星驰",
+                direct: "周星驰",
+                type: "x喜剧",
+                time: "2014年12月24日"
+            },
+            {
+                img: "suduyujiqing.jpg",
+                movieName: "速度与激情",
+                star: "保罗·沃克",
+                direct: "罗伯·科恩",
+                type: "d动作",
+                time: "2015年4月3日"
+            },
+            {
+                img: "dahuaxiyou.jpg",
+                movieName: "大话西游",
+                star: "周星驰",
+                direct: "刘镇伟",
+                type: "a爱情",
+                time: "2014年10月24日"
+            }
+        ];
+        // 放置电影表格对象的构造函数
+        function MovieTable(tableId) {
+            this.tableId = tableId;
+        }
+
+        // 初始化表格的方法
+        MovieTable.prototype.initTable = function () {
+            var table = document.createElement('table');
+            table.id = this.tableId;
+            table.border = '1';
+            table.cellPadding = '0';
+            table.cellSpacing = '0';
+            document.body.appendChild(table);
+        };
+
+        // 初始化表格头部-thead的方法
+        MovieTable.prototype.initThead = function () {
+            var table = document.getElementById(this.tableId);
+            if (!table) {
+                this.initTable();
+                table = document.getElementById(this.tableId);
+            }
+            var thead = document.createElement('thead');
+            thead.innerHTML = "<tr><td>影片</td><td>主演</td><td>导演</td><td>类别</td><td>上映时间</td></tr>"
+            table.appendChild(thead);
+        };
+
+        // 初始化表格身体-tbody的方法
+        MovieTable.prototype.initTbody = function () {
+            var table = document.getElementById(this.tableId);
+            if (!table) {
+                this.initTable();
+                table = document.getElementById(this.tableId);
+            }
+            if (document.getElementById('tbodyId')){
+                table.removeChild(document.getElementById('tbodyId'));
+            }
+            var tbody = document.createElement('tbody');
+            tbody.id = 'tbodyId';
+            for (var i = 0; i < movieArray.length; i++) {
+                var tr = document.createElement('tr');
+                for (var key in movieArray[i]) {
+                    if (key === 'img') {
+                        var td = document.createElement('td')
+                        var image = document.createElement('img');
+                        image.src = 'images/'+movieArray[i][key];
+                        td.appendChild(image);
+                        // td.innerHTML = movieArray[i][key];
+                        tr.appendChild(td);
+                    } else if (key !== 'movieName') {
+                        var td = document.createElement('td');
+                        td.innerHTML = movieArray[i][key];
+                        tr.appendChild(td);
+                    } else {
+                        // console.log(tr.firstChild.innerHTML);
+                        tr.firstChild.innerHTML = tr.firstChild.innerHTML.concat('<br/>', movieArray[i][key]);
+                        // console.log(tr.firstChild.innerHTML);
+                    }
+                }
+                tbody.appendChild(tr);
+            }
+            table.appendChild(tbody);
+        };
+
+        // 排序的方法
+        MovieTable.prototype.movieSort = function (data, arr) {
+            var ff = function (obj1, obj2) {
+                if (obj1[arr] > obj2[arr]) {
+                    return 1;
+                } else if (obj1[arr] === obj2[arr]) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            };
+            data.sort(ff);
+        };
+
+        // 绑定事件的函数
+        MovieTable.prototype.addEvent = function (data) {
+            var tdList = document.querySelectorAll('#tableId thead td');
+            var that = this;
+            for (var i = 0; i < tdList.length; i++) {
+                tdList[i].onclick = function () {
+                    // console.log(this);
+                    switch (this.innerHTML) {
+                        case '影片':
+                            that.movieSort(data, 'movieName');
+                            break;
+                        case '主演':
+                            that.movieSort(data, 'star');
+                            break;
+                        case '导演':
+                            that.movieSort(data, 'direct');
+                            break;
+                        case '类别':
+                            that.movieSort(data, 'type');
+                            break;
+                        case '上映时间':
+                            that.movieSort(data, 'time');
+                            break;
+                    }
+                    that.initTbody();
+                };
+            }
+        };
+        
+        // 整体初始化-init
+        MovieTable.prototype.init = function (data){
+            this.initTable();
+            this.initThead();
+            this.initTbody();
+            this.addEvent(data);
+        };
+        
+        // 测试代码
+        var movie = new MovieTable('tableId');
+        movie.init(movieArray);
+        // movie.movieSort(movieArray, 'time');
+        // console.log(movieArray);
+    </script>
+</body>
+
+</html>
