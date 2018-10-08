@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>祝福墙页面</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('images/bg.gif') repeat top left;
+            font-size: 12px;
+        }
+
+        .wrap {
+            position: relative;
+            margin: 0 auto;
+            width: 906px;
+            height: 627px;
+            background: url("images/content_bg.jpg")
+        }
+
+        .tip {
+            position: absolute;
+            top: 100px;
+            left: 400px;
+            width: 227px;
+        }
+
+        .u-head {
+            padding-top: 45px;
+            width: 100%;
+            height: 23px;
+            text-align: left;
+            background: url('images/tip1_h.gif') no-repeat top left;
+        }
+
+        .u-time {
+            float: left;
+            padding-left: 7px;
+            width: 195px;
+        }
+
+        .u-closed {
+            float: left;
+        }
+
+        .u-content {
+            padding: 0 12px 0 15px;
+            width: 200px;
+            min-height: 40px;
+            max-height: 160px;
+            line-height: 20px;
+            background: url('images/tip1_c.gif') repeat-y top left;
+
+        }
+
+        .u-foot {
+            width: 200px;
+            padding-left: 12px;
+            padding-right: 15px;
+            padding-top: 20px;
+            height: 53px;
+            text-align: center;
+            background: url('images/tip1_f.gif') no-repeat top left;
+        }
+
+        .u-icon {
+            float: left;
+            height: 35px;
+        }
+
+        .u-name {
+            float: right;
+            color: hotpink;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: '';
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        img {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+    </div>
+    <script>
+        var messages = [{
+                "id": 1,
+                "name": "mahu",
+                "content": "今天你拿苹果支付了么",
+                "time": "2016-02-17 00:00:00"
+            },
+            {
+                "id": 2,
+                "name": "haha",
+                "content": "今天天气不错，风和日丽的",
+                "time": "2016-02-18 12:40:00"
+            },
+            {
+                "id": 3,
+                "name": "jjjj",
+                "content": "常要说的事儿是乐生于苦",
+                "time": "2016-03-18 12:40:00"
+            },
+            {
+                "id": 4,
+                "name": "9.8的妹纸",
+                "content": "把朋友家厕所拉堵了 不敢出去 掏了半小时了都",
+                "time": "2016-03-18 12:40:00"
+            },
+            {
+                "id": 5,
+                "name": "雷锋ii.",
+                "content": "元宵节快乐",
+                "time": "2016-02-22 12:40:00"
+            },
+            {
+                "id": 6,
+                "name": "哎呦哥哥.",
+                "content": "据说今晚央视的元宵晚会导演和春晚导演是同一个人，真是躲得过初一，躲不过十五。",
+                "time": "2016-02-22 01:30:00"
+            },
+            {
+                "id": 7,
+                "name": "没猴哥，不春晚",
+                "content": "班主任:“小明，你都十二岁了，还是三年级，不觉得羞愧吗”？。小明:“一点也不觉得，老师你都四十多岁了，不也是年年在三年级混日子吗？羞愧的应该是你”。老师:……",
+                "time": "2016-02-22 01:30:00"
+            },
+            {
+                "id": 8,
+                "name": "哎呦杰杰.",
+                "content": "真搞不懂你们地球人，月亮有什么好看的，全是坑，还是对面那哥们好看，",
+                "time": "2016-02-22 01:30:00"
+            },
+            {
+                "id": 9,
+                "name": "哎呦哎呦",
+                "content": "今天哪里的烟花最好看！！？答：朋友圈。。。",
+                "time": "2016-02-22 02:30:00"
+            }
+        ];
+
+        var wrapElement = document.querySelector('.wrap');
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        for (var i = 0; i < messages.length; i++) {
+
+            var tipElement = document.createElement('div');
+
+            tipElement.className = 'tip';
+
+            tipElement.style.left = random(50, 700) + 'px';
+
+            tipElement.style.top = random(100, 400) + 'px';
+
+            var headElement = document.createElement('div');
+
+            headElement.className = 'u-head';
+
+            var timeElement = document.createElement('span');
+
+            timeElement.className = 'u-time';
+
+            timeElement.innerHTML = '第[' + messages[i].id + ']条 ' + messages[i].time;
+
+            var closedElement = document.createElement('span');
+
+            closedElement.className = 'u-closed';
+
+            closedElement.innerHTML = 'x';
+
+
+            headElement.appendChild(timeElement);
+
+            headElement.appendChild(closedElement);
+
+            tipElement.appendChild(headElement);
+
+            var contentElement = document.createElement('div');
+
+            contentElement.className = 'u-content';
+
+            contentElement.innerHTML = messages[i].content;
+
+            tipElement.appendChild(contentElement);
+
+            var footElement = document.createElement('div');
+
+            footElement.className = 'u-foot clearfix';
+
+            var iconElement = document.createElement('span');
+
+            iconElement.className = 'u-icon';
+
+            iconElement.innerHTML = "<img src='images/bpic_1.gif'>";
+
+            var nameElement = document.createElement('span');
+
+            nameElement.className = 'u-name';
+
+            nameElement.innerHTML = messages[i].name;
+
+            footElement.appendChild(iconElement);
+
+            footElement.appendChild(nameElement);
+
+            tipElement.appendChild(footElement);
+
+            wrapElement.appendChild(tipElement);
+        }
+    </script>
+</body>
+
+</html>
