@@ -1,0 +1,308 @@
+/* head */
+.jd_head_box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.jd_head {
+    position: relative;
+    margin: 0 auto;
+    padding-left: 80px;
+    padding-right: 50px;
+    width: 100%;
+    height: 50px;
+    max-width: 640px;
+    background-color: rgba(201,21,35,0);
+}
+.jd_head >.jd_search {
+    position: relative;
+    padding: 5px 0;
+    width: 100%;
+    height: 50px;
+}
+.jd_head > .jd_search > .icon_search {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    background: url(../images/sprites.png) no-repeat -60px -110px;
+    background-size: 200px 200px;
+}
+.jd_head > .jd_search > input {
+    padding-left: 35px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+}
+.jd_head > .jd_logo {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    width: 60px;
+    height: 20px;
+    transform: translateY(-50%);
+    background: url(../images/sprites.png) no-repeat 0px -110px;
+    background-size: 200px;
+}
+.jd_head > .jd_login {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    /* font-weight: 700; */
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+}
+/* 轮播图样式开始 */
+.jd_banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+} 
+.jd_banner ul:first-child {
+    /* position: absolute; */
+    /* top: 0;
+    left: 0; */
+    width: 1000%;
+    /* transition: transform .1s; */
+    transform: translateX(-10%);
+}
+.jd_banner ul:first-child > li {
+    float: left;
+    width: 10%;
+}
+.jd_banner ul:first-child li > a {
+    width: 100%;
+}
+.jd_banner ul:first-child li > a > img {
+    display: block;
+    width: 100%;
+}
+.jd_banner ul:last-child {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+.jd_banner ul:last-child > li {
+    float: left;
+    margin-left: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+}
+.jd_banner ul:last-child > li:first-of-type {
+    margin: 0;
+}
+.jd_banner ul:last-child >li.current {
+    background-color: #ffffff;
+}
+/* 导航栏开始 */
+.jd_nav {
+    width: 100%;
+    border-bottom: #cccccc solid 1px;
+    background-color: #fff;
+}
+.jd_nav > ul {
+    width: 100%;
+    margin: 10px 0;
+    background-color: #fff;
+}
+.jd_nav > ul > li {
+    float: left;
+    width: 25%;
+    /* padding: 0px 25px; */
+}
+.jd_nav > ul > li > a {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 70px;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 40px;
+}
+.jd_nav > ul > li:nth-of-type(1) > a{
+    background-image: url(../images/nav0.png);
+}
+.jd_nav > ul > li:nth-of-type(2) > a{
+    background-image: url(../images/nav1.png);
+}
+.jd_nav > ul > li:nth-of-type(3) > a{
+    background-image: url(../images/nav2.png);
+}
+.jd_nav > ul > li:nth-of-type(4) > a{
+    background-image: url(../images/nav3.png);
+}
+.jd_nav > ul > li:nth-of-type(5) > a{
+    background-image: url(../images/nav4.png);
+}
+.jd_nav > ul > li:nth-of-type(6) > a{
+    background-image: url(../images/nav5.png);
+}
+.jd_nav > ul > li:nth-of-type(7) > a{
+    background-image: url(../images/nav6.png);
+}
+.jd_nav > ul > li:nth-of-type(8) > a{
+    background-image: url(../images/nav7.png);
+}
+.jd_nav > ul > li > a > span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    padding: 5px 0;
+}
+/* 京东商品样式开始 */
+.jd_prodcut_container {
+    width: 100%;
+    height: 1000px;
+    padding: 0 4px;
+    background-color: #ccc;
+}
+.product_promotion , .product_shopping, .product_selfoperated{
+    margin-top: 8px;
+    /* padding: 0 10px; */
+    width: 100%;
+    border: 1px solid #cccccc;
+    background-color: #fff;
+}
+.product_promotion .header_con {
+    width: 100%;
+    padding: 10px;
+}
+.product_promotion .header_con .header_left {
+    float: left;
+}
+.product_promotion .header_con .header_left span {
+    float: left;
+    height: 20px;
+    margin-left: 10px;
+}
+.product_promotion > .header_con > .header_left span:nth-of-type(1) {
+    width: 20px;
+    margin-left: 0;
+}
+.product_promotion > .header_con > .header_left span:nth-of-type(2) {
+    font-size: 16px;
+    color: red;
+}
+.product_promotion > .header_con > .header_left span:nth-of-type(3) > i {
+    float: left;
+    margin-left: 2px;
+    width: 20px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    background-color: black;
+}
+.product_promotion > .header_con > .header_left span:nth-of-type(3) > i:nth-of-type(3),
+.product_promotion > .header_con > .header_left span:nth-of-type(3) > i:nth-of-type(6) {
+    width: auto;
+    color: black;
+    background-color: #fff;
+}
+.icon_clock {
+    background: url(../images/seckill-icon.png) no-repeat top left;
+    background-size: contain;
+}
+.product_promotion .header_con .header_right {
+    float: right;
+}
+.product-detial {
+    margin: 10px auto;
+    width: 100%;
+}
+.product-detial > ul {
+    width: 100%;
+}
+.product-detial > ul > li {
+    float: left;
+    width: 33.333%;
+}
+.product-detial > ul > li a {
+    float: left;
+}
+.product-detial > ul > li:nth-of-type(2) > a{
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.product-detial > ul > li > a > img {
+    display: block;
+    margin: 0 auto;
+    width: 64%;
+}
+.product-detial > ul > li > p {
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px 0;
+}
+.product-detial > ul > li p:nth-child(2) {
+    color: red;
+}
+.product-detial > ul > li  p:nth-child(3) {
+    text-decoration: line-through;
+    color: black;
+}
+.product_title {
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+    border-bottom: #ccc solid 1px;
+    line-height: 30px;
+}
+.product_title > h3 {
+    position: relative;
+    padding-left: 20px;
+    font-size: 16px;
+    font-weight: normal;
+}
+.product_title > h3::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 16px;
+    border-left: 4px solid red;
+}
+.product_main {
+    width: 100%;
+}
+.product_main > ul {
+    width: 100%;
+}
+.product_main > ul > li:nth-child(1) {
+    /* float: left; */
+    width: 50%;
+    border-right: 1px solid #cccccc;
+}
+.product_main > ul > li:nth-child(2){
+    border-bottom: 1px solid #cccccc;
+}
+.product_main > ul > li:nth-last-child(-n+2) {
+    /* float: right; */
+    width: 50%;
+}
+.product_main > ul > li img {
+    display: block;
+    width: 100%;
+}
